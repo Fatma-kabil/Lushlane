@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lushlane_app/features/auth/presentation/views/login_view.dart';
 
 void main() {
   runApp(LushLaneApp());
@@ -11,7 +12,7 @@ class LushLaneApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(),
+      home: LoginView(),
     );
   }
 }
