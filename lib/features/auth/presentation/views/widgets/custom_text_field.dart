@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lushlane_app/constants.dart';
 
 class CustomTextField extends StatelessWidget {
   CustomTextField({
@@ -32,7 +33,7 @@ class CustomTextField extends StatelessWidget {
 
         suffixIconColor: Color(0xffb0d5ca),
         hintText: hintText,
-        hintStyle: const TextStyle(color: Color(0xffb0d5ca)),
+        hintStyle: const TextStyle(color:kPrimaryColor),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide.none,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lushlane_app/features/auth/presentation/views/widgets/custom_button.dart';
 import 'package:lushlane_app/features/auth/presentation/views/widgets/custom_text_field.dart';
+import 'package:lushlane_app/features/auth/presentation/views/widgets/text_icon.dart';
 
 class LoginViewBody extends StatelessWidget {
   const LoginViewBody({super.key});
@@ -35,17 +36,7 @@ class LoginViewBody extends StatelessWidget {
                   const SizedBox(height: 10),
                   CustomButton(text: 'Login', onTap: () {}),
                   const SizedBox(height: 10),
-                  GestureDetector(
-                    onTap: () {},
-                    child: const Text(
-                      ' Reset password?',
-                      style: TextStyle(
-                        color: Color(0xffb0d5ca),
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
+                  TextIcon(text: ' Reset password?'),
                   const SizedBox(height: 40),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -59,17 +50,7 @@ class LoginViewBody extends StatelessWidget {
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      GestureDetector(
-                        onTap: () {},
-                        child: const Text(
-                          ' Sign in',
-                          style: TextStyle(
-                            color: Color(0xffb0d5ca),
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
+                      TextIcon(text: ' Sign in'),
                     ],
                   ),
                 ],
