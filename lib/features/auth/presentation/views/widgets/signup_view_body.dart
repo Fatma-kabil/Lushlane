@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:lushlane_app/features/auth/presentation/views/signup_view.dart';
+import 'package:lushlane_app/features/auth/presentation/views/login_view.dart';
 import 'package:lushlane_app/features/auth/presentation/views/widgets/custom_button.dart';
 import 'package:lushlane_app/features/auth/presentation/views/widgets/custom_text_field.dart';
 import 'package:lushlane_app/features/auth/presentation/views/widgets/text_icon.dart';
 
-class LoginViewBody extends StatelessWidget {
-  const LoginViewBody({super.key});
+class SignupViewBody extends StatelessWidget {
+  const SignupViewBody({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 190),
+        padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 150),
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(14),
@@ -24,6 +24,10 @@ class LoginViewBody extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CustomTextField(
+                  hintText: 'Enter your UserName :',
+                  icon: const Icon(Icons.person_3_sharp),
+                ), const SizedBox(height: 15),
+                CustomTextField(
                   hintText: 'Enter your Email :',
                   icon: const Icon(Icons.email),
                 ),
@@ -33,16 +37,16 @@ class LoginViewBody extends StatelessWidget {
                   hintText: 'Enter your Password :',
                   icon: const Icon(Icons.remove_red_eye),
                 ),
-                const SizedBox(height: 10),
-                CustomButton(text: 'Login', onTap: () {}),
                 const SizedBox(height: 15),
+                CustomButton(text: 'Sign up', onTap: () {}),
+                const SizedBox(height: 10),
                 TextIcon(text: ' Reset password?'),
                 const SizedBox(height: 40),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
-                      'don’t have an account?',
+                      'already have an account?',
                       style: TextStyle(
                         color: Colors.grey,
                         fontSize: 15,
@@ -51,13 +55,13 @@ class LoginViewBody extends StatelessWidget {
                       ),
                     ),
                     TextIcon(
-                      text: ' Sign up',
+                      text: ' Login',
                       ontap: () {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                             builder: (context) {
-                              return SignupView();
+                              return LoginView();
                             },
                           ),
                         );

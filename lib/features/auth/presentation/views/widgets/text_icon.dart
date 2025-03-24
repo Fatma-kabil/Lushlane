@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:lushlane_app/constants.dart';
 
@@ -17,7 +16,7 @@ class TextIcon extends StatelessWidget {
         style: TextStyle(
           color: kPrimaryColor,
           fontSize: 15,
-          fontWeight: FontWeight.w500,
+          fontWeight: FontWeight.w700,
         ),
       ),
     );
