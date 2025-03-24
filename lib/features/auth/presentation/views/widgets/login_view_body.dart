@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lushlane_app/features/auth/presentation/views/widgets/custom_button.dart';
 import 'package:lushlane_app/features/auth/presentation/views/widgets/custom_text_field.dart';
 
 class LoginViewBody extends StatelessWidget {
@@ -22,16 +23,30 @@ class LoginViewBody extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CustomTextField(
-                    hintText: 'Email',
+                    hintText: 'Enter your Email :',
                     icon: const Icon(Icons.email),
                   ),
                   const SizedBox(height: 15),
                   CustomTextField(
                     obscureText: true,
-                    hintText: 'Password',
+                    hintText: 'Enter your Password :',
                     icon: const Icon(Icons.remove_red_eye),
                   ),
                   const SizedBox(height: 10),
+                  CustomButton(text: 'Login', onTap: () {}),
+                  const SizedBox(height: 10),
+                  GestureDetector(
+                    onTap: () {},
+                    child: const Text(
+                      ' Reset password?',
+                      style: TextStyle(
+                        color: Color(0xffb0d5ca),
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 40),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -47,7 +62,7 @@ class LoginViewBody extends StatelessWidget {
                       GestureDetector(
                         onTap: () {},
                         child: const Text(
-                          ' Register',
+                          ' Sign in',
                           style: TextStyle(
                             color: Color(0xffb0d5ca),
                             fontSize: 15,

@@ -28,8 +28,9 @@ class CustomTextField extends StatelessWidget {
       decoration: InputDecoration(
         filled: true, // ضروري لتفعيل اللون
         fillColor: Colors.grey[200],
-        prefixIcon: icon,
-        prefixIconColor: Color(0xffb0d5ca),
+        suffixIcon: icon,
+
+        suffixIconColor: Color(0xffb0d5ca),
         hintText: hintText,
         hintStyle: const TextStyle(color: Color(0xffb0d5ca)),
         enabledBorder: OutlineInputBorder(
