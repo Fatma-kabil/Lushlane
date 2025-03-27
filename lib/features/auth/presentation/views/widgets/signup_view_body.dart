@@ -10,16 +10,16 @@ class SignupViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 150),
+      child: SingleChildScrollView(
         child: Container(
+           margin: EdgeInsets.symmetric(horizontal: 20,),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(14),
             color: Colors.white,
           ),
-
+        
           child: Padding(
-            padding: const EdgeInsets.all(12),
+            padding: const EdgeInsets.all(20),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -50,7 +50,7 @@ class SignupViewBody extends StatelessWidget {
                       style: TextStyle(
                         color: Colors.grey,
                         fontSize: 15,
-
+        
                         fontWeight: FontWeight.w700,
                       ),
                     ),
