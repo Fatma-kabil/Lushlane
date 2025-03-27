@@ -39,8 +39,8 @@ class SignupViewBody extends StatelessWidget {
                 ),
                 const SizedBox(height: 15),
                 CustomButton(text: 'Sign up', onTap: () {}),
-                const SizedBox(height: 10),
-                TextIcon(text: ' Reset password?'),
+                
+               
                 const SizedBox(height: 40),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
