@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lushlane_app/features/auth/presentation/manger/login_cubit/login_cubit.dart';
 import 'package:lushlane_app/features/auth/presentation/views/reset_password_view.dart';
 import 'package:lushlane_app/features/auth/presentation/views/signup_view.dart';
 import 'package:lushlane_app/features/auth/presentation/views/widgets/custom_button.dart';
@@ -19,75 +21,92 @@ class LoginViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: SingleChildScrollView(
-        child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 20),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(14),
-            color: Colors.white,
-          ),
+    return Form(
+      key: formkey,
+      child: Center(
+        child: SingleChildScrollView(
+          child: Container(
+            margin: EdgeInsets.symmetric(horizontal: 20),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(14),
+              color: Colors.white,
+            ),
 
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CustomTextField(
-                  hintText: 'Enter your Email :',
-                  icon: const Icon(Icons.email),
-                ),
-                const SizedBox(height: 15),
-                CustomTextField(
-                  obscureText: true,
-                  hintText: 'Enter your Password :',
-                  icon: const Icon(Icons.remove_red_eye),
-                ),
-                const SizedBox(height: 10),
-                CustomButton(text: 'Login', onTap: () {}),
-                const SizedBox(height: 15),
-                TextIcon(
-                  text: ' Reset password?',
-                  ontap: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return ResetPasswordView();
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CustomTextField(
+                    onchanged: (data) {
+                      email = data;
+                      email = email?.trim();
+                    },
+                    hintText: 'Enter your Email :',
+                    icon: const Icon(Icons.email),
+                  ),
+                  const SizedBox(height: 15),
+                  CustomTextField(
+                    onchanged: (data) {
+                      email = data;
+                      email = email?.trim();
+                    },
+                    obscureText: true,
+                    hintText: 'Enter your Password :',
+                    icon: const Icon(Icons.remove_red_eye),
+                  ),
+                  const SizedBox(height: 10),
+                  CustomButton(text: 'Login', onTap: () async{
+
+                    if (formkey.currentState!.validate()) {
+                        BlocProvider.of<LoginCubit>(context)
+                            .loginUser(email: email!, password: password!);
+                      }
+                  }),
+                  const SizedBox(height: 15),
+                  TextIcon(
+                    text: ' Reset password?',
+                    ontap: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return ResetPasswordView();
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 40),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'don’t have an account?',
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 15,
+
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      TextIcon(
+                        text: ' Sign up',
+                        ontap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return SignupView();
+                              },
+                            ),
+                          );
                         },
                       ),
-                    );
-                  },
-                ),
-                const SizedBox(height: 40),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      'don’t have an account?',
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: 15,
-
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    TextIcon(
-                      text: ' Sign up',
-                      ontap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return SignupView();
-                            },
-                          ),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),

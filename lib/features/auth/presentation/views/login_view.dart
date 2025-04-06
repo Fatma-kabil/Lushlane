@@ -1,13 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lushlane_app/constants.dart';
+import 'package:lushlane_app/core/show_snack_bar.dart';
+import 'package:lushlane_app/features/auth/presentation/manger/login_cubit/login_cubit.dart';
 import 'package:lushlane_app/features/auth/presentation/views/widgets/login_view_body.dart';
-
+import 'package:lushlane_app/features/home/presentation/views/home_view.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(child: Scaffold(backgroundColor: kPrimaryColor, body: LoginViewBody()));
+    return BlocConsumer<LoginCubit, LoginState>(
+      listener: (context, state) {
+        if (state is LoginLoading) {
+          print('Loading...');
+        } else if (state is LoginSuccess) {
+          print('Signup Successful!');
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => HomeView()),
+          );
+        } else if (state is LoginFailure) {
+          print('Signup Failed: ${state.errMassege}');
+          showSnakBar(context, state.errMassege);
+        }
+      },
+      builder: (context, state) {
+        return ModalProgressHUD(
+          inAsyncCall: state is LoginLoading,
+          child: SafeArea(
+            child: Scaffold(
+              backgroundColor: kPrimaryColor,
+              body: LoginViewBody(),
+            ),
+          ),
+        );
+      },
+    );
   }
 }
