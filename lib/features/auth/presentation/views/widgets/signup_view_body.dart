@@ -28,6 +28,7 @@ class SignupViewBody extends StatelessWidget {
                   icon: const Icon(Icons.person_3_sharp),
                 ), const SizedBox(height: 15),
                 CustomTextField(
+                  
                   hintText: 'Enter your Email :',
                   icon: const Icon(Icons.email),
                 ),

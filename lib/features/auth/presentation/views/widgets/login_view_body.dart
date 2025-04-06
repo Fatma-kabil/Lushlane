@@ -31,6 +31,7 @@ class LoginViewBody extends StatelessWidget {
                 ),
                 const SizedBox(height: 15),
                 CustomTextField(
+                  
                   obscureText: true,
                   hintText: 'Enter your Password :',
                   icon: const Icon(Icons.remove_red_eye),
