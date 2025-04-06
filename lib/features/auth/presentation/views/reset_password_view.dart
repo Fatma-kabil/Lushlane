@@ -4,6 +4,7 @@ import 'package:lushlane_app/features/auth/presentation/views/widgets/resset_pas
 
 class ResetPasswordView extends StatelessWidget {
   const ResetPasswordView({super.key});
+  
 
   @override
   Widget build(BuildContext context) {
