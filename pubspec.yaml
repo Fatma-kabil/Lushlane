@@ -35,6 +35,7 @@ dependencies:
     sdk: flutter
   flutter_bloc: ^9.1.0
   flutter_native_splash: ^2.4.5
+  modal_progress_hud_nsn: ^0.5.1
 flutter_native_splash:
   color: "#ffffff" # لون الخلفية
   image: assets/images/LushLaneAppIcon.png

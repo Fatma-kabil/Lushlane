@@ -7,21 +7,26 @@ part 'signup_states.dart';
 class SignupCubit extends Cubit<SignupStates> {
   SignupCubit() : super(SignupInitial());
 
-  Future<void> registerUser(
-      {required String email, required String password,required String name}) async {
+  Future<void> signupUser({
+    required String email,
+    required String password,
+    required String name,
+  }) async {
+    print('Started loading...');
     emit(SignupLoading());
 
     try {
       UserCredential user = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
 
-          
-    // هنا بنضيف الاسم كـ displayName في Firebase Auth
-    await user.user!.updateDisplayName(name);
+      // هنا بنضيف الاسم كـ displayName في Firebase Auth
+      await user.user!.updateDisplayName(name);
 
       emit(SignupSuccess());
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
+      if (e.code == 'invalid-email-format') {
+        emit(SignupFailure(errMassege: 'البريد الإلكتروني غير صحيح.'));
+      } else if (e.code == 'weak-password') {
         emit(SignupFailure(errMassege: 'weak-password'));
       } else if (e.code == 'email-already-in-use') {
         emit(SignupFailure(errMassege: 'email-already-in-use'));

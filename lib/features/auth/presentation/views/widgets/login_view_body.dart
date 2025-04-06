@@ -7,7 +7,15 @@ import 'package:lushlane_app/features/auth/presentation/views/widgets/custom_tex
 import 'package:lushlane_app/features/auth/presentation/views/widgets/text_icon.dart';
 
 class LoginViewBody extends StatelessWidget {
-  const LoginViewBody({super.key});
+  LoginViewBody({super.key});
+
+  GlobalKey<FormState> formkey = GlobalKey();
+
+  String? email;
+
+  String? password;
+
+  bool isloading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +39,6 @@ class LoginViewBody extends StatelessWidget {
                 ),
                 const SizedBox(height: 15),
                 CustomTextField(
-                  
                   obscureText: true,
                   hintText: 'Enter your Password :',
                   icon: const Icon(Icons.remove_red_eye),
