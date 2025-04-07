@@ -15,27 +15,29 @@ class SignupView extends StatelessWidget {
     return BlocConsumer<SignupCubit, SignupStates>(
       listener: (context, state) {
         if (state is SignupLoading) {
-       print('Loading...');
-  } else if (state is SignupSuccess) {
-    print('Signup Successful!');
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => HomeView(),
-      ),
-    );
-  } else if (state is SignupFailure) {
-    print('Signup Failed: ${state.errMassege}');
-    showSnakBar(context, state.errMassege);
-  }
+          print('Loading...');
+        } else if (state is SignupSuccess) {
+          print('Signup Successful!');
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => HomeView()),
+          );
+        } else if (state is SignupFailure) {
+          print('Signup Failed: ${state.errMassege}');
+          showSnakBar(context, state.errMassege);
+        }
       },
       builder: (context, state) {
         bool isLoading = state is SignupLoading;
 
         return ModalProgressHUD(
           inAsyncCall: isLoading,
-          child: SafeArea(child: Scaffold(backgroundColor: kPrimaryColor, body: SignupViewBody()))
-  
+          child: SafeArea(
+            child: Scaffold(
+              backgroundColor: kPrimaryColor,
+              body: SignupViewBody(),
+            ),
+          ),
         );
       },
     );
