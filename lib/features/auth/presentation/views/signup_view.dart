@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lushlane_app/constants.dart';
 import 'package:lushlane_app/core/show_snack_bar.dart';
+import 'package:lushlane_app/core/utils/loading_indecator.dart';
 import 'package:lushlane_app/features/auth/presentation/manger/signup_cubit/signup_cubit.dart';
 import 'package:lushlane_app/features/auth/presentation/views/widgets/signup_view_body.dart';
 import 'package:lushlane_app/features/home/presentation/views/home_view.dart';
@@ -15,15 +16,15 @@ class SignupView extends StatelessWidget {
     return BlocConsumer<SignupCubit, SignupStates>(
       listener: (context, state) {
         if (state is SignupLoading) {
-          print('Loading...');
+          //   print('Loading...');
         } else if (state is SignupSuccess) {
-          print('Signup Successful!');
+          //   print('Signup Successful!');
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => HomeView()),
           );
         } else if (state is SignupFailure) {
-          print('Signup Failed: ${state.errMassege}');
+          //  print('Signup Failed: ${state.errMassege}');
           showSnakBar(context, state.errMassege);
         }
       },
@@ -31,6 +32,7 @@ class SignupView extends StatelessWidget {
         bool isLoading = state is SignupLoading;
 
         return ModalProgressHUD(
+          progressIndicator: LoadingIndecator(),
           inAsyncCall: isLoading,
           child: SafeArea(
             child: Scaffold(

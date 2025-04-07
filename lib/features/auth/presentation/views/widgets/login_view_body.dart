@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lushlane_app/core/show_snack_bar.dart';
 import 'package:lushlane_app/features/auth/presentation/manger/login_cubit/login_cubit.dart';
 import 'package:lushlane_app/features/auth/presentation/views/reset_password_view.dart';
 import 'package:lushlane_app/features/auth/presentation/views/signup_view.dart';
@@ -17,7 +18,7 @@ class LoginViewBody extends StatelessWidget {
 
   String? password;
 
-  bool isloading = false;
+  
 
   @override
   Widget build(BuildContext context) {
@@ -48,8 +49,9 @@ class LoginViewBody extends StatelessWidget {
                   const SizedBox(height: 15),
                   CustomTextField(
                     onchanged: (data) {
-                      email = data;
-                      email = email?.trim();
+                      password = data;
+                      password = password?.trim();
+                      
                     },
                     obscureText: true,
                     hintText: 'Enter your Password :',
@@ -61,7 +63,10 @@ class LoginViewBody extends StatelessWidget {
                     if (formkey.currentState!.validate()) {
                         BlocProvider.of<LoginCubit>(context)
                             .loginUser(email: email!, password: password!);
-                      }
+                      }else {
+                            showSnakBar(context,
+                                'Please enter  email and password');
+                          }
                   }),
                   const SizedBox(height: 15),
                   TextIcon(

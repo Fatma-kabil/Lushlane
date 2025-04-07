@@ -24,8 +24,8 @@ class SignupCubit extends Cubit<SignupStates> {
 
       emit(SignupSuccess());
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'invalid-email-format') {
-        emit(SignupFailure(errMassege: 'البريد الإلكتروني غير صحيح.'));
+      if (e.code == 'invalid-email-format'|| e.code == 'invalid-email') {
+        emit(SignupFailure(errMassege: 'Invalid email format'));
       } else if (e.code == 'weak-password') {
         emit(SignupFailure(errMassege: 'weak-password'));
       } else if (e.code == 'email-already-in-use') {

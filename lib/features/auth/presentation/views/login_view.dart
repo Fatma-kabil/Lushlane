@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lushlane_app/constants.dart';
 import 'package:lushlane_app/core/show_snack_bar.dart';
+import 'package:lushlane_app/core/utils/loading_indecator.dart';
 import 'package:lushlane_app/features/auth/presentation/manger/login_cubit/login_cubit.dart';
 import 'package:lushlane_app/features/auth/presentation/views/widgets/login_view_body.dart';
 import 'package:lushlane_app/features/home/presentation/views/home_view.dart';
@@ -15,21 +16,25 @@ class LoginView extends StatelessWidget {
     return BlocConsumer<LoginCubit, LoginState>(
       listener: (context, state) {
         if (state is LoginLoading) {
-          print('Loading...');
+        //  print('Loading...');
         } else if (state is LoginSuccess) {
-          print('Signup Successful!');
+         // print('login Successful!');
+         
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => HomeView()),
           );
         } else if (state is LoginFailure) {
-          print('Signup Failed: ${state.errMassege}');
+        //  print('login Failed: ${state.errMassege}');
           showSnakBar(context, state.errMassege);
         }
       },
       builder: (context, state) {
+        bool isLoading = state is LoginLoading;
+       //  debugPrint('isLoading: $isLoading');
         return ModalProgressHUD(
-          inAsyncCall: state is LoginLoading,
+          progressIndicator: LoadingIndecator(),
+          inAsyncCall: isLoading,
           child: SafeArea(
             child: Scaffold(
               backgroundColor: kPrimaryColor,
@@ -41,3 +46,4 @@ class LoginView extends StatelessWidget {
     );
   }
 }
+
