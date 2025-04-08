@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:lushlane_app/constants.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomAppBar({super.key});
-
+  const CustomAppBar({super.key, required this.title});
+  final String title;
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -24,8 +24,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           style: TextStyle(color: Colors.white, fontSize: 17),
         ),
       ],
-      title: const Text(
-        'Home',
+      title:  Text(
+        title,
         style: TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.w500,
