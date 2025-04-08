@@ -1,10 +1,7 @@
-
 import 'package:flutter/material.dart';
 
 class CustomCard extends StatelessWidget {
-  const CustomCard({
-    super.key,
-  });
+  const CustomCard({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -39,10 +36,12 @@ class CustomCard extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('\$105', style: const TextStyle(fontSize: 16)),
+                      Text('\$105', style: const TextStyle(fontSize: 15)),
                       IconButton(
                         icon: Icon(
+                          
                           Icons.shopping_cart_outlined,
+                          size: 20,
                           color:
                               Colors
                                   .grey[500], // Red if favorited, white if not
@@ -58,12 +57,8 @@ class CustomCard extends StatelessWidget {
         ),
         Positioned(
           right: 32,
-          bottom: 85,
-          child: Image.asset(
-            'assets/images/test.png',
-            height: 100,
-            width: 100,
-          ),
+          bottom: 60,
+          child: Image.asset('assets/images/test.png', height: 100, width: 100),
         ),
       ],
     );
