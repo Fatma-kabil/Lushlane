@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lushlane_app/features/home/presentation/views/product_details_view.dart';
 import 'package:lushlane_app/features/home/presentation/views/widgets/custom_card.dart';
 
 class HomeViewBody extends StatelessWidget {
@@ -7,7 +8,15 @@ class HomeViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) {
+              return ProductDetailsView();
+            },
+          ),
+        );
+      },
       child: Padding(
         padding: const EdgeInsets.only(
           left: 16,
