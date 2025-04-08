@@ -13,7 +13,22 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
       emit(ResetPasswordSuccess());
     } on FirebaseAuthException catch (e) {
-      emit(ResetPasswordFailure(errMassege: e.message ?? 'Something went wrong'));
+      // تحسين الرسائل بناءً على كود الخطأ
+      switch (e.code) {
+        case 'user-not-found':
+          emit(ResetPasswordFailure(errMassege: 'No user found for that email.'));
+          break;
+        case 'invalid-email':
+          emit(ResetPasswordFailure(errMassege: 'Invalid email address format.'));
+          break;
+        case 'missing-email':
+          emit(ResetPasswordFailure(errMassege: 'Please enter an email.'));
+          break;
+        default:
+          emit(ResetPasswordFailure(errMassege: 'Something went wrong. Please try again.'));
+      }
+    } catch (e) {
+      emit(ResetPasswordFailure(errMassege: 'Unexpected error occurred.'));
     }
   }
 }

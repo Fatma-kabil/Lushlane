@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lushlane_app/constants.dart';
-import 'package:lushlane_app/core/show_snack_bar.dart';
-import 'package:lushlane_app/core/utils/loading_indecator.dart';
+import 'package:lushlane_app/core/utils/widgets/show_snack_bar.dart';
+import 'package:lushlane_app/core/utils/widgets/loading_indecator.dart';
 import 'package:lushlane_app/features/auth/presentation/manger/signup_cubit/signup_cubit.dart';
 import 'package:lushlane_app/features/auth/presentation/views/widgets/signup_view_body.dart';
 import 'package:lushlane_app/features/home/presentation/views/home_view.dart';

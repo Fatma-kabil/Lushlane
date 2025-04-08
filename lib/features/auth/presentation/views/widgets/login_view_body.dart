@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lushlane_app/core/show_snack_bar.dart';
+import 'package:lushlane_app/core/utils/widgets/show_snack_bar.dart';
 import 'package:lushlane_app/features/auth/presentation/manger/login_cubit/login_cubit.dart';
 import 'package:lushlane_app/features/auth/presentation/views/reset_password_view.dart';
 import 'package:lushlane_app/features/auth/presentation/views/signup_view.dart';
