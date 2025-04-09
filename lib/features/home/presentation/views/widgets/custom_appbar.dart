@@ -11,20 +11,43 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       scrolledUnderElevation: 0.0,
       backgroundColor: kPrimaryColor,
       actions: [
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(
-            Icons.shopping_cart_outlined,
-            size: 20,
-            color: Colors.white,
-          ),
+        Stack(
+          children: [
+            IconButton(
+              icon: const Icon(
+                Icons.shopping_cart_outlined,
+                color: Colors.white,
+              ),
+              onPressed: () {},
+            ),
+            Positioned(
+              right: 8,
+              top: 4,
+              child: Container(
+                padding: const EdgeInsets.all(6),
+                decoration: const BoxDecoration(
+                  color: Colors.blueGrey,
+                  shape: BoxShape.circle,
+                ),
+                child: const Text(
+                  '0',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 10,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
+
         Text(
           '  \$105    ',
           style: TextStyle(color: Colors.white, fontSize: 17),
         ),
       ],
-      title:  Text(
+      title: Text(
         title,
         style: TextStyle(
           fontSize: 20,
