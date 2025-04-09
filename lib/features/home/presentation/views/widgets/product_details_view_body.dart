@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lushlane_app/constants.dart';
+import 'package:lushlane_app/features/home/presentation/views/widgets/rating_and_shop_info.dart';
+
 
 class ProductDetailsViewBody extends StatefulWidget {
   ProductDetailsViewBody({super.key});
@@ -34,30 +35,7 @@ class _ProductDetailsViewBodyState extends State<ProductDetailsViewBody> {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 11),
-            Row(
-              children: [
-                Container(
-                  padding: EdgeInsets.all(5),
-                  child: Text('New', style: TextStyle(fontSize: 15)),
-                  decoration: BoxDecoration(
-                    color: Colors.redAccent,
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                ),
-                SizedBox(width: 4),
-                ...List.generate(
-                  5,
-                  (index) => Icon(Icons.star, color: Colors.amber, size: 24),
-                ),
-                Spacer(),
-                Row(
-                  children: [
-                    Icon(Icons.edit_location, size: 24, color: kPrimaryColor),
-                    Text('flower shop', style: TextStyle(fontSize: 16)),
-                  ],
-                ),
-              ],
-            ),
+            RatingAndShopInfo(),
 
             SizedBox(height: 11),
             Align(
