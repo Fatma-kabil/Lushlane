@@ -5,7 +5,7 @@ class ApiService {
 
   ApiService({required this.dio});
 
-  Future<Map<String,dynamic>>getPots({required String endpoint})async{
+  Future<List<dynamic>>getPots({required String endpoint})async{
     var response = await dio.get(endpoint);
     return response.data;
 
