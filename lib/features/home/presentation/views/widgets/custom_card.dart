@@ -1,7 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:lushlane_app/features/home/data/models/pots_model.dart';
 
 class CustomCard extends StatelessWidget {
-  const CustomCard({super.key});
+   CustomCard({super.key,required this.pot});
+ final PotsModel pot ;
 
   @override
   Widget build(BuildContext context) {
@@ -36,10 +39,9 @@ class CustomCard extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('\$105', style: const TextStyle(fontSize: 15)),
+                      Text('\$${pot.price}', style: const TextStyle(fontSize: 15)),
                       IconButton(
                         icon: Icon(
-                          
                           Icons.shopping_cart_outlined,
                           size: 20,
                           color:
@@ -58,7 +60,11 @@ class CustomCard extends StatelessWidget {
         Positioned(
           right: 32,
           bottom: 60,
-          child: Image.asset('assets/images/test.png', height: 100, width: 100),
+          child: CachedNetworkImage(
+           fit: BoxFit.fill,
+           imageUrl: pot.image,
+           errorWidget: (context, url, error) => const Icon(Icons.error),
+          height: 100, width: 100),
         ),
       ],
     );

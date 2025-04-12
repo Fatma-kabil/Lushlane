@@ -18,14 +18,13 @@ class PotsModel {
   });
 
   factory PotsModel.fromJson(Map<String, dynamic> json) {
-    return PotsModel(
-      name: json['name'],
-      description: json['description'],
-      price: json['price'].toDouble(),
-
-      shopName: json['shop_name'],
-      location: json['location'],
-      image: json['image'],
-    );
-  }
+  return PotsModel(
+    name: json['name'] ?? '',
+    description: json['description'] ?? '',
+    price: json['price'] != null ? double.tryParse(json['price'].toString()) ?? 0.0 : 0.0,
+    shopName: json['shop_name'] ?? '',
+    location: json['location'] ?? '',
+    image: json['image'] ?? '',
+  );
+}
 }

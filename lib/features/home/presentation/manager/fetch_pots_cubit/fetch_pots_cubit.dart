@@ -8,7 +8,7 @@ part 'fetch_pots_state.dart';
 class FetchPotsCubit extends Cubit<FetchPotsState> {
   FetchPotsCubit(this.homerepo) : super(FetchPotsInitial());
   final HomeRepo homerepo;
-  Future<void> fetchFeaturedBooks() async {
+  Future<void> fetchpots() async {
     emit(FetchPotsLoading());
     var result = await homerepo.fetchpots();
 

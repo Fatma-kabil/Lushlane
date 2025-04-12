@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
 import 'package:lushlane_app/features/home/presentation/views/widgets/custom_appbar.dart';
-import 'package:lushlane_app/features/home/presentation/views/widgets/home_view_body.dart';
+import 'package:lushlane_app/features/home/presentation/views/widgets/home_view_body_bloc_builder.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -11,8 +10,8 @@ class HomeView extends StatelessWidget {
     return Scaffold(
       drawer: Drawer(),
       backgroundColor: Colors.white,
-      appBar: CustomAppBar(title: 'Home',),
-      body: HomeViewBody(),
+      appBar: CustomAppBar(title: 'Home'),
+      body: HomeViewBodyBlocBuilder(),
     );
   }
 }

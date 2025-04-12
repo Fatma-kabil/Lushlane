@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:lushlane_app/features/home/data/models/pots_model.dart';
 import 'package:lushlane_app/features/home/presentation/views/product_details_view.dart';
 import 'package:lushlane_app/features/home/presentation/views/widgets/custom_card.dart';
 
 class HomeViewBody extends StatelessWidget {
-  const HomeViewBody({super.key});
+   HomeViewBody({super.key,required this.pots});
+  List<PotsModel> pots ;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,7 @@ class HomeViewBody extends StatelessWidget {
           bottom: 40,
         ),
         child: GridView.builder(
-          itemCount: 20,
+          itemCount: pots.length,
           clipBehavior: Clip.none,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
@@ -34,7 +36,7 @@ class HomeViewBody extends StatelessWidget {
             mainAxisSpacing: 70,
           ),
           itemBuilder: (context, index) {
-            return CustomCard();
+            return CustomCard(pot:pots[index] ,);
           },
         ),
       ),
