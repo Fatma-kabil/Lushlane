@@ -1,9 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:lushlane_app/features/home/data/models/pots_model.dart';
 import 'package:lushlane_app/features/home/presentation/views/widgets/rating_and_shop_info.dart';
 
-
 class ProductDetailsViewBody extends StatefulWidget {
-  ProductDetailsViewBody({super.key});
+  ProductDetailsViewBody({super.key, required this.pot});
+  final PotsModel pot;
 
   @override
   State<ProductDetailsViewBody> createState() => _ProductDetailsViewBodyState();
@@ -23,27 +25,30 @@ class _ProductDetailsViewBodyState extends State<ProductDetailsViewBody> {
             Container(
               color: Colors.grey[100],
               width: MediaQuery.of(context).size.width,
-              child: Image.asset(
-                'assets/images/test.png',
+              child: CachedNetworkImage(
+                fit: BoxFit.fill,
+                imageUrl: widget.pot.image,
+                errorWidget: (context, url, error) => const Icon(Icons.error),
                 height: 300,
                 //     width: 20,
               ),
             ),
             SizedBox(height: 11),
             Text(
-              '\$105',
+              '\$${widget.pot.price}',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 11),
-            RatingAndShopInfo(),
+            RatingAndShopInfo(pot: widget.pot),
 
             SizedBox(height: 11),
             Align(
               alignment: Alignment.centerLeft,
-              child: Text('Details :', style: TextStyle(fontSize: 22))),
+              child: Text('Details :', style: TextStyle(fontSize: 22)),
+            ),
             SizedBox(height: 11),
             Text(
-              'A flower, also known as a bloom or blossom,[1] is the reproductive structure found in flowering plants (plants of the division Angiospermae). Flowers consist of a combination of vegetative organs – sepals that enclose and protect the developing flower. Petals attract pollinators, and reproductive organs that produce gametophytes, which in flowering plants produce gametes. The male gametophytes, which produce sperm, are enclosed within pollen grains produced in the anthers. The female gametophytes are contained within the ovules produced in the ovary.[2][3] In some plants, multiple flowers occur singly on a pedicel (flower stalk), and some are arranged in a group (inflorescence) on a peduncle (inflorescence stalk)',
+              widget.pot.description,
               style: TextStyle(fontSize: 17),
               maxLines: isShowMore ? 5 : null,
               overflow: TextOverflow.fade,

@@ -1,12 +1,13 @@
 
 import 'package:flutter/material.dart';
+import 'package:lushlane_app/features/home/data/models/pots_model.dart';
 import 'package:lushlane_app/features/home/presentation/views/widgets/shop_details.dart';
 
 class RatingAndShopInfo extends StatelessWidget {
   const RatingAndShopInfo({
-    super.key,
+    super.key, required this.pot,
   });
-
+ final PotsModel pot;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -25,7 +26,7 @@ class RatingAndShopInfo extends StatelessWidget {
           (index) => Icon(Icons.star, color: Colors.amber, size: 24),
         ),
         Spacer(),
-        ShopDetails(),
+        ShopDetails(pot: pot,),
       ],
     );
   }
