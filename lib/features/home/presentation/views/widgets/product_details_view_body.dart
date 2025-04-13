@@ -44,12 +44,12 @@ class _ProductDetailsViewBodyState extends State<ProductDetailsViewBody> {
             SizedBox(height: 11),
             Align(
               alignment: Alignment.centerLeft,
-              child: Text('Details :', style: TextStyle(fontSize: 22)),
+              child: Text('Details :', style: TextStyle(fontSize: 20)),
             ),
             SizedBox(height: 11),
             Text(
               widget.pot.description,
-              style: TextStyle(fontSize: 17),
+              style: TextStyle(fontSize: 16),
               maxLines: isShowMore ? 5 : null,
               overflow: TextOverflow.fade,
             ),
