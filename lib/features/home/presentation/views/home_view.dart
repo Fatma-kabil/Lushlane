@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lushlane_app/features/home/presentation/views/widgets/custom_appbar.dart';
+import 'package:lushlane_app/core/utils/widgets/custom_appbar.dart';
 import 'package:lushlane_app/features/home/presentation/views/widgets/home_view_body_bloc_builder.dart';
 
 class HomeView extends StatelessWidget {
