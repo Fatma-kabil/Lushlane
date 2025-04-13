@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lushlane_app/constants.dart';
 import 'package:lushlane_app/features/home/presentation/manager/fetch_pots_cubit/cart_cubit.dart/cart_cubit.dart';
+import 'package:lushlane_app/features/home/presentation/views/check_out_view.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({super.key, required this.title});
@@ -25,13 +26,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ),
                   onPressed: () {
                     // الانتقال إلى صفحة السلة عند الضغط على أيقونة السلة
-                  //  Navigator.of(context).push(MaterialPageRoute(
-                    //    builder: (context) => CartScreen(cartItems: cartState['items'])));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => CheckOutView(
+                        )));
                   },
                 ),
                 Positioned(
                   right: 8,
-                  top: 4,
+                  top: 0,
                   child: Container(
                     padding: const EdgeInsets.all(6),
                     decoration: const BoxDecoration(
@@ -42,7 +44,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                       cartState['itemCount'].toString(),
                       style: const TextStyle(
                         color: Colors.white,
-                        fontSize: 10,
+                        fontSize: 9,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
