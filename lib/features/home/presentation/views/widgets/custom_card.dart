@@ -1,10 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lushlane_app/features/home/data/models/pots_model.dart';
+import 'package:lushlane_app/features/home/presentation/manager/fetch_pots_cubit/cart_cubit.dart/cart_cubit.dart';
 
 class CustomCard extends StatelessWidget {
-   CustomCard({super.key,required this.pot});
- final PotsModel pot ;
+  CustomCard({super.key, required this.pot});
+  final PotsModel pot;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +41,10 @@ class CustomCard extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('\$${pot.price}', style: const TextStyle(fontSize: 15)),
+                      Text(
+                        '\$${pot.price}',
+                        style: const TextStyle(fontSize: 15),
+                      ),
                       IconButton(
                         icon: Icon(
                           Icons.shopping_cart_outlined,
@@ -48,7 +53,10 @@ class CustomCard extends StatelessWidget {
                               Colors
                                   .grey[500], // Red if favorited, white if not
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          // إضافة العنصر مع البيانات إلى السلة
+                          BlocProvider.of<CartCubit>(context).addToCart(pot);
+                        },
                       ),
                     ],
                   ),
@@ -61,10 +69,12 @@ class CustomCard extends StatelessWidget {
           right: 32,
           bottom: 60,
           child: CachedNetworkImage(
-           fit: BoxFit.fill,
-           imageUrl: pot.image,
-           errorWidget: (context, url, error) => const Icon(Icons.error),
-          height: 100, width: 100),
+            fit: BoxFit.fill,
+            imageUrl: pot.image,
+            errorWidget: (context, url, error) => const Icon(Icons.error),
+            height: 100,
+            width: 100,
+          ),
         ),
       ],
     );

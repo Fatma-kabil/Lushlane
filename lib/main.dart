@@ -7,6 +7,7 @@ import 'package:lushlane_app/features/auth/presentation/manger/login_cubit/login
 import 'package:lushlane_app/features/auth/presentation/manger/reset_password_cubit/reset_password_cubit.dart';
 import 'package:lushlane_app/features/auth/presentation/manger/signup_cubit/signup_cubit.dart';
 import 'package:lushlane_app/features/home/data/repos/home_repo_impl.dart';
+import 'package:lushlane_app/features/home/presentation/manager/fetch_pots_cubit/cart_cubit.dart/cart_cubit.dart';
 import 'package:lushlane_app/features/home/presentation/manager/fetch_pots_cubit/fetch_pots_cubit.dart';
 import 'package:lushlane_app/features/home/presentation/views/home_view.dart';
 import 'package:lushlane_app/firebase_options.dart';
@@ -33,6 +34,7 @@ class LushLaneApp extends StatelessWidget {
                 HomeRepoImpl(apiService: ApiService(dio: Dio())),
               ),
         ),
+        BlocProvider(create: (context) => CartCubit()),
       ],
 
       child: MaterialApp(debugShowCheckedModeBanner: false, home: HomeView()),

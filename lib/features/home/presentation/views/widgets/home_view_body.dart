@@ -3,6 +3,7 @@ import 'package:lushlane_app/features/home/data/models/pots_model.dart';
 import 'package:lushlane_app/features/home/presentation/views/product_details_view.dart';
 import 'package:lushlane_app/features/home/presentation/views/widgets/custom_card.dart';
 
+// ignore: must_be_immutable
 class HomeViewBody extends StatelessWidget {
   HomeViewBody({super.key, required this.pots});
   List<PotsModel> pots;
