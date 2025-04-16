@@ -9,4 +9,20 @@ class ApiService {
     var response = await dio.get(endpoint);
     return response.data;
   }
+
+
+
+   Future<Response> post(
+       {required body,
+       required String url,
+       required String token,
+       String? contentType}) async {
+     var response = dio.post(url,
+         data: body,
+         options: Options(
+             contentType: contentType,
+             headers: {'Authorization': "Bearer $token"}));
+     return response;
+   }
+ 
 }

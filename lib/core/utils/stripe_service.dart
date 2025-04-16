@@ -1,1 +1,5 @@
-class StripeService {}
+class StripeService {
+// PaymentIntentModel createPaymentIntent(PaymentIntentInputModel paymentIntentInputModel)
+
+
+}
