@@ -7,6 +7,7 @@ import 'package:lushlane_app/features/checkout/presentation/views/widgets/pot_li
 class CheckOutViewBody extends StatelessWidget {
   final List<PotsModel> cartItems;
   final double totalPrice;
+  
 
   const CheckOutViewBody({
     super.key,
