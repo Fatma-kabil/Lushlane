@@ -3,6 +3,7 @@ import 'package:lushlane_app/core/utils/api_keys.dart';
 import 'package:lushlane_app/core/utils/api_service.dart';
 import 'package:lushlane_app/features/checkout/data/models/payment_intent_model.dart';
 import 'package:lushlane_app/features/checkout/data/models/payment_intent_models/payment_intent_models.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 
 class StripeService {
 
@@ -16,6 +17,14 @@ final ApiService apiservice = ApiService(dio: Dio());
          token: ApiKeys.secretKey);
      var paymentIntentModel = PaymentIntentModels.fromJson(response.data);
      return paymentIntentModel;
+   }
+
+    Future initPaymentSheet({required String paymentIntentClientSecret}) async {
+     Stripe.instance.initPaymentSheet(
+       paymentSheetParameters: SetupPaymentSheetParameters(
+           paymentIntentClientSecret: paymentIntentClientSecret,
+           merchantDisplayName: 'Fatma'),
+     );
    }
 }
 

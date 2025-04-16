@@ -33,4 +33,3 @@ Runner/GeneratedPluginRegistrant.*
 !default.pbxuser
 !default.perspectivev3
 
-lib/core/utils/api_keys.dart
