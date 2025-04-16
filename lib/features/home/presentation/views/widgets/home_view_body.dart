@@ -11,12 +11,7 @@ class HomeViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(
-        left: 16,
-        right: 16,
-        top: 70,
-        bottom: 40,
-      ),
+      padding: const EdgeInsets.only(left: 16, right: 16, top: 70, bottom: 40),
       child: GridView.builder(
         itemCount: pots.length,
         clipBehavior: Clip.none,
@@ -37,7 +32,9 @@ class HomeViewBody extends StatelessWidget {
                 ),
               );
             },
-            child: CustomCard(pot: pots[index]),  // Ensure your CustomCard widget is set up to take `pot`
+            child: CustomCard(
+              pot: pots[index],
+            ), // Ensure your CustomCard widget is set up to take `pot`
           );
         },
       ),

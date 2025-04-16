@@ -26,9 +26,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ),
                   onPressed: () {
                     // الانتقال إلى صفحة السلة عند الضغط على أيقونة السلة
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => CheckOutView(
-                        )));
+                    Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => CheckOutView()),
+                    );
                   },
                 ),
                 Positioned(

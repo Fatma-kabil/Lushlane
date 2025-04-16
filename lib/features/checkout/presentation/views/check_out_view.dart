@@ -22,13 +22,9 @@ class CheckOutView extends StatelessWidget {
             (sum, item) => sum + item.price,
           );
 
-          return CheckOutViewBody(
-            cartItems: cartItems,
-            totalPrice: totalPrice,
-          );
+          return CheckOutViewBody(cartItems: cartItems, totalPrice: totalPrice);
         },
       ),
     );
   }
 }
-

@@ -11,7 +11,7 @@ class ProductDetailsView extends StatelessWidget {
     return Scaffold(
       appBar: CustomAppBar(title: 'details screen'),
       backgroundColor: Colors.white,
-      body: ProductDetailsViewBody(pot: pot,),
+      body: ProductDetailsViewBody(pot: pot),
     );
   }
 }

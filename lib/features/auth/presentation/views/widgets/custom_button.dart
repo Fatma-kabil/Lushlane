@@ -8,7 +8,6 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(

@@ -18,8 +18,6 @@ class LoginViewBody extends StatelessWidget {
 
   String? password;
 
-  
-
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -51,23 +49,27 @@ class LoginViewBody extends StatelessWidget {
                     onchanged: (data) {
                       password = data;
                       password = password?.trim();
-                      
                     },
                     obscureText: true,
                     hintText: 'Enter your Password :',
                     icon: const Icon(Icons.remove_red_eye),
                   ),
                   const SizedBox(height: 10),
-                  CustomButton(text: 'Login', onTap: () async{
-
-                    if (formkey.currentState!.validate()) {
-                        BlocProvider.of<LoginCubit>(context)
-                            .loginUser(email: email!, password: password!);
-                      }else {
-                            showSnakBar(context,
-                                'Please enter  email and password');
-                          }
-                  }),
+                  CustomButton(
+                    text: 'Login',
+                    onTap: () async {
+                      if (formkey.currentState!.validate()) {
+                        BlocProvider.of<LoginCubit>(
+                          context,
+                        ).loginUser(email: email!, password: password!);
+                      } else {
+                        showSnakBar(
+                          context,
+                          'Please enter  email and password',
+                        );
+                      }
+                    },
+                  ),
                   const SizedBox(height: 15),
                   TextIcon(
                     text: ' Reset password?',

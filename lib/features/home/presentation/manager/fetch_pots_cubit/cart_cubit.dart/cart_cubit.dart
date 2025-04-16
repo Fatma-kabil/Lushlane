@@ -8,12 +8,12 @@ class CartCubit extends Cubit<Map<String, dynamic>> {
   void addToCart(PotsModel pot) {
     // إضافة العنصر إلى السلة حتى لو كان موجودًا بالفعل
     List<PotsModel> currentItems = List.from(state['items']);
-    currentItems.add(pot);  // إضافة العنصر دون التحقق من وجوده مسبقًا
+    currentItems.add(pot); // إضافة العنصر دون التحقق من وجوده مسبقًا
 
     emit({
       'items': currentItems,
       'totalPrice': currentItems.fold(0.0, (sum, item) => sum + item.price),
-      'itemCount': currentItems.length
+      'itemCount': currentItems.length,
     });
   }
 
@@ -25,7 +25,7 @@ class CartCubit extends Cubit<Map<String, dynamic>> {
     emit({
       'items': currentItems,
       'totalPrice': currentItems.fold(0.0, (sum, item) => sum + item.price),
-      'itemCount': currentItems.length
+      'itemCount': currentItems.length,
     });
   }
 }

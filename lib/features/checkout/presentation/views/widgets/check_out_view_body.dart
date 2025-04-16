@@ -3,6 +3,7 @@ import 'package:lushlane_app/constants.dart';
 import 'package:lushlane_app/features/home/data/models/pots_model.dart';
 
 import 'package:lushlane_app/features/checkout/presentation/views/widgets/pot_listview_card.dart';
+
 class CheckOutViewBody extends StatelessWidget {
   final List<PotsModel> cartItems;
   final double totalPrice;
@@ -16,7 +17,12 @@ class CheckOutViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (cartItems.isEmpty) {
-      return  Center(child: Text('Your cart is Empty.',style: TextStyle(color: Colors.blueGrey,fontWeight: FontWeight.bold),));
+      return Center(
+        child: Text(
+          'Your cart is Empty.',
+          style: TextStyle(color: Colors.blueGrey, fontWeight: FontWeight.bold),
+        ),
+      );
     }
 
     return Column(
@@ -47,7 +53,10 @@ class CheckOutViewBody extends StatelessWidget {
                   ),
                   Text(
                     '\$${totalPrice.toStringAsFixed(2)}',
-                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ],
               ),
@@ -58,7 +67,10 @@ class CheckOutViewBody extends StatelessWidget {
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: kPrimaryColor,
-                  padding: const EdgeInsets.symmetric(vertical: 13, horizontal: 12),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 13,
+                    horizontal: 12,
+                  ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),

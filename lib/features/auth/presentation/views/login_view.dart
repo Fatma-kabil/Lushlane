@@ -16,22 +16,22 @@ class LoginView extends StatelessWidget {
     return BlocConsumer<LoginCubit, LoginState>(
       listener: (context, state) {
         if (state is LoginLoading) {
-        //  print('Loading...');
+          //  print('Loading...');
         } else if (state is LoginSuccess) {
-         // print('login Successful!');
-         
+          // print('login Successful!');
+
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => HomeView()),
           );
         } else if (state is LoginFailure) {
-        //  print('login Failed: ${state.errMassege}');
+          //  print('login Failed: ${state.errMassege}');
           showSnakBar(context, state.errMassege);
         }
       },
       builder: (context, state) {
         bool isLoading = state is LoginLoading;
-       //  debugPrint('isLoading: $isLoading');
+        //  debugPrint('isLoading: $isLoading');
         return ModalProgressHUD(
           progressIndicator: LoadingIndecator(),
           inAsyncCall: isLoading,
@@ -46,4 +46,3 @@ class LoginView extends StatelessWidget {
     );
   }
 }
-

@@ -9,10 +9,9 @@ class HomeViewBodyBlocBuilder extends StatefulWidget {
   const HomeViewBodyBlocBuilder({super.key});
 
   @override
-  State<HomeViewBodyBlocBuilder> createState() => _HomeViewBodyBlocBuilderState();
-
+  State<HomeViewBodyBlocBuilder> createState() =>
+      _HomeViewBodyBlocBuilderState();
 }
-
 
 class _HomeViewBodyBlocBuilderState extends State<HomeViewBodyBlocBuilder> {
   void initState() {
@@ -20,12 +19,13 @@ class _HomeViewBodyBlocBuilderState extends State<HomeViewBodyBlocBuilder> {
     // 🔥 Trigger the cubit
     BlocProvider.of<FetchPotsCubit>(context).fetchpots();
   }
+
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<FetchPotsCubit,FetchPotsState>(
+    return BlocBuilder<FetchPotsCubit, FetchPotsState>(
       builder: (context, state) {
         if (state is FetchPotsSucsses) {
-          return HomeViewBody(pots: state.pots,);
+          return HomeViewBody(pots: state.pots);
         } else if (state is FetchPotsFailure) {
           return CustomErrorWidget(errMessage: state.errMessage);
         } else {
@@ -33,6 +33,5 @@ class _HomeViewBodyBlocBuilderState extends State<HomeViewBodyBlocBuilder> {
         }
       },
     );
-    
   }
 }
