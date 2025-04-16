@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lushlane_app/constants.dart';
+import 'package:lushlane_app/features/checkout/presentation/manager/check_cubit/checkout_cubit.dart';
 import 'package:lushlane_app/features/home/data/models/pots_model.dart';
-
+import 'package:lushlane_app/features/checkout/data/models/payment_intent_input_model.dart';
 import 'package:lushlane_app/features/checkout/presentation/views/widgets/pot_listview_card.dart';
 
 class CheckOutViewBody extends StatelessWidget {
   final List<PotsModel> cartItems;
   final double totalPrice;
-  
 
   const CheckOutViewBody({
     super.key,
@@ -62,30 +63,56 @@ class CheckOutViewBody extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () {
-                  print('Proceed to payment');
+              BlocConsumer<CheckoutCubit, CheckoutState>(
+                listener: (context, state) {
+                  if (state is CheckoutFailure) {
+                    // عرض رسالة فشل الدفع
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text(state.errMessage)),
+                    );
+                  } else if (state is CheckoutSuccess) {
+                    // عرض رسالة نجاح الدفع
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Payment Successful')),
+                    );
+                  }
                 },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: kPrimaryColor,
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 13,
-                    horizontal: 12,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  elevation: 5,
-                  shadowColor: Colors.blueAccent.withOpacity(0.3),
-                ),
-                child: const Text(
-                  'Proceed to Payment',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white,
-                  ),
-                ),
+                builder: (context, state) {
+                  if (state is CheckoutLoading) {
+                    return const CircularProgressIndicator();
+                  }
+
+                  return ElevatedButton(
+                    onPressed: () {
+                      final paymentIntentInput = PaymentIntentInputModel(
+                        amount: (totalPrice * 100).toInt(), // هنا نفترض أن المبلغ يتم دفعه بالدولار
+                        currency: 'USD',
+                        // يمكن إضافة باقي التفاصيل إذا كان هناك حاجة
+                      );
+                      context.read<CheckoutCubit>().makePayment(paymentIntentInputModel: paymentIntentInput);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: kPrimaryColor,
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 13,
+                        horizontal: 12,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      elevation: 5,
+                      shadowColor: Colors.blueAccent.withOpacity(0.3),
+                    ),
+                    child: const Text(
+                      'Proceed to Payment',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      ),
+                    ),
+                  );
+                },
               ),
             ],
           ),
