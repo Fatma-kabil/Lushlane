@@ -26,5 +26,9 @@ final ApiService apiservice = ApiService(dio: Dio());
            merchantDisplayName: 'Fatma'),
      );
    }
+
+   Future displayPaymentSheet() async {
+     Stripe.instance.presentPaymentSheet();
+   }
 }
 
