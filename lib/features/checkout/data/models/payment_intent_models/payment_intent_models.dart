@@ -133,7 +133,10 @@ class PaymentIntentModels {
               : PaymentMethodOptions.fromJson(
                 json['payment_method_options'] as Map<String, dynamic>,
               ),
-      paymentMethodTypes: json['payment_method_types'] as List<String>?,
+      paymentMethodTypes: (json['payment_method_types'] as List<dynamic>?)
+    ?.map((e) => e.toString())
+    .toList(),
+
       processing: json['processing'] as dynamic,
       receiptEmail: json['receipt_email'] as dynamic,
       review: json['review'] as dynamic,

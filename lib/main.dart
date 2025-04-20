@@ -15,10 +15,21 @@ import 'package:lushlane_app/features/home/presentation/views/home_view.dart';
 import 'package:lushlane_app/firebase_options.dart';
 
 void main() async {
-  Stripe.publishableKey = ApiKeys.publishKey;
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  runApp(LushLaneApp());
+
+  // 1. إعداد مفتاح Stripe
+  Stripe.publishableKey = ApiKeys.publishKey;
+
+  // 2. إعداد Stripe بالكامل (👇 لازم تضيف السطر ده)
+  await Stripe.instance.applySettings();
+
+  // 3. تهيئة Firebase
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  // 4. تشغيل التطبيق
+  runApp(const LushLaneApp());
 }
 
 class LushLaneApp extends StatelessWidget {

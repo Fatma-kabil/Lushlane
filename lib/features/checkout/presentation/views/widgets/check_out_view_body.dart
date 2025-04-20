@@ -87,6 +87,7 @@ class CheckOutViewBody extends StatelessWidget {
                       final paymentIntentInput = PaymentIntentInputModel(
                         amount: (totalPrice * 100).toInt(), // هنا نفترض أن المبلغ يتم دفعه بالدولار
                         currency: 'USD',
+                        customerId: 'cus_S9t70AarbClyU5'
                         // يمكن إضافة باقي التفاصيل إذا كان هناك حاجة
                       );
                       context.read<CheckoutCubit>().makePayment(paymentIntentInputModel: paymentIntentInput);
