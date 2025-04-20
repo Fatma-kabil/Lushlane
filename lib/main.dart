@@ -8,7 +8,6 @@ import 'package:lushlane_app/core/utils/api_service.dart';
 import 'package:lushlane_app/features/auth/presentation/manger/login_cubit/login_cubit.dart';
 import 'package:lushlane_app/features/auth/presentation/manger/reset_password_cubit/reset_password_cubit.dart';
 import 'package:lushlane_app/features/auth/presentation/manger/signup_cubit/signup_cubit.dart';
-import 'package:lushlane_app/features/checkout/presentation/views/thank_you_view.dart';
 import 'package:lushlane_app/features/home/data/repos/home_repo_impl.dart';
 import 'package:lushlane_app/features/home/presentation/manager/fetch_pots_cubit/cart_cubit.dart/cart_cubit.dart';
 import 'package:lushlane_app/features/home/presentation/manager/fetch_pots_cubit/fetch_pots_cubit.dart';
@@ -52,7 +51,7 @@ class LushLaneApp extends StatelessWidget {
         BlocProvider(create: (context) => CartCubit()),
       ],
 
-      child: MaterialApp(debugShowCheckedModeBanner: false, home: ThankYouView()),
+      child: MaterialApp(debugShowCheckedModeBanner: false, home: HomeView()),
     );
   }
 }
