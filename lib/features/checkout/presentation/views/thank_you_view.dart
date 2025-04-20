@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:lushlane_app/constants.dart';
+import 'package:lushlane_app/features/home/presentation/views/home_view.dart';
 
 class ThankYouView extends StatelessWidget {
   const ThankYouView({super.key});
@@ -15,7 +17,7 @@ class ThankYouView extends StatelessWidget {
               children: [
                 Icon(
                   Icons.check_circle_outline,
-                  color: Colors.green,
+                  color: kPrimaryColor,
                   size: 100,
                 ),
                 const SizedBox(height: 20),
@@ -37,24 +39,26 @@ class ThankYouView extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () {
                     // Navigate to home or another page
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                      '/home',
+                    Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (_) => HomeView()),
                       (route) => false,
                     );
                   },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 32, vertical: 16),
-                    backgroundColor: Colors.green,
+                      horizontal: 32,
+                      vertical: 16,
+                    ),
+                    backgroundColor: kPrimaryColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
                   child: const Text(
                     'Continue Shopping',
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(fontSize: 16, color: Colors.blueGrey),
                   ),
-                )
+                ),
               ],
             ),
           ),

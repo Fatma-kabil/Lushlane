@@ -56,7 +56,7 @@ class CheckoutFooter extends StatelessWidget {
             },
             builder: (context, state) {
               if (state is CheckoutLoading) {
-                return const CircularProgressIndicator();
+                return const CircularProgressIndicator(color: Colors.grey,);
               }
 
               return ElevatedButton(
