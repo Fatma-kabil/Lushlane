@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lushlane_app/constants.dart';
 import 'package:lushlane_app/features/drawer/presentation/manager/profile_cubit/profile_cubit.dart';
+import 'package:lushlane_app/features/drawer/presentation/views/widgets/profile_image_bloc_builder.dart';
 
 class DrawerViewBody extends StatelessWidget {
   const DrawerViewBody({super.key});
 
   @override
   Widget build(BuildContext context) {
-   return Drawer(
+   return  Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
@@ -21,31 +22,8 @@ class DrawerViewBody extends StatelessWidget {
               children: [
                 Stack(
                   children: [
-                    BlocBuilder<ProfileCubit, ProfileState>(
-                      builder: (context, state) {
-                        if (state is ProfileLoading) {
-                          return const CircleAvatar(
-                            radius: 40,
-                            child: CircularProgressIndicator(),
-                          );
-                        } else if (state is ProfileLoaded) {
-                          return CircleAvatar(
-                            radius: 40,
-                            backgroundImage: FileImage(state.profileImage),
-                          );
-                        } else if (state is ProfileFailure) {
-                          return const CircleAvatar(
-                            radius: 40,
-                            child: Icon(Icons.error, color: Colors.red),
-                          );
-                        } else {
-                          return const CircleAvatar(
-                            radius: 40,
-                            backgroundImage: AssetImage("assets/images/test.png"),
-                          );
-                        }
-                      },
-                    ),
+                    // استخدام ويدجت ProfileImageWidget هنا
+                    const ProfileImageBlocBuilder(),
                     Positioned(
                       bottom: 0,
                       right: 0,

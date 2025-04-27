@@ -1,26 +1,23 @@
-import 'dart:io';
-
 import 'package:bloc/bloc.dart';
+import 'package:lushlane_app/core/utils/profile_image_manager.dart';
 import 'package:meta/meta.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
+import 'dart:io';
+// استيراد الكلاس الجديد
 
 part 'profile_state.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
-  ProfileCubit() : super(ProfileInitial());
+  final ProfileImageManager _profileImageManager;
 
-  final String _imageKey = 'profile_image_path';
+  ProfileCubit(this._profileImageManager) : super(ProfileInitial());
 
   Future<void> loadProfileImage() async {
     try {
       emit(ProfileLoading());
-      final prefs = await SharedPreferences.getInstance();
-      final imagePath = prefs.getString(_imageKey);
+      final imageFile = await _profileImageManager.loadProfileImage();
 
-      if (imagePath != null && File(imagePath).existsSync()) {
-        emit(ProfileLoaded(File(imagePath)));
+      if (imageFile != null) {
+        emit(ProfileLoaded(imageFile));
       } else {
         emit(ProfileInitial()); // مفيش صورة محفوظة
       }
@@ -32,14 +29,9 @@ class ProfileCubit extends Cubit<ProfileState> {
   Future<void> pickImage() async {
     try {
       emit(ProfileLoading());
+      final imageFile = await _profileImageManager.pickImage();
 
-      final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
-
-      if (pickedFile != null) {
-        final imageFile = File(pickedFile.path);
-        final prefs = await SharedPreferences.getInstance();
-        await prefs.setString(_imageKey, pickedFile.path);
-
+      if (imageFile != null) {
         emit(ProfileLoaded(imageFile));
       } else {
         emit(ProfileInitial()); // المستخدم رجع بدون اختيار صورة
