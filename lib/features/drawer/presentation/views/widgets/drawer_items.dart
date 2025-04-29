@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lushlane_app/core/utils/functions/show_logout_dialog.dart';
 import 'package:lushlane_app/features/checkout/presentation/views/check_out_view.dart';
+import 'package:lushlane_app/features/drawer/presentation/views/profile_view.dart';
 import 'package:lushlane_app/features/home/presentation/views/home_view.dart';
 
 class DrawerItems extends StatelessWidget {
@@ -30,7 +31,9 @@ class DrawerItems extends StatelessWidget {
         ListTile(
           leading: const Icon(Icons.info_outline),
           title: const Text('About'),
-          onTap: () => Navigator.pop(context),
+          onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) =>  ProfileView()),
+              ),
         ),
 
         ListTile(
