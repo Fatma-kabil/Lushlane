@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:lushlane_app/features/drawer/presentation/views/widgets/drawer_items.dart';
 import 'package:lushlane_app/features/drawer/presentation/views/widgets/header.dart';
 
 class DrawerViewBody extends StatelessWidget {
@@ -14,19 +15,7 @@ class DrawerViewBody extends StatelessWidget {
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
-        children: [
-          Header(username: username, email: email),
-          ListTile(
-            leading: const Icon(Icons.home),
-            title: const Text('Home'),
-            onTap: () => Navigator.pop(context),
-          ),
-          ListTile(
-            leading: const Icon(Icons.settings),
-            title: const Text('Settings'),
-            onTap: () => Navigator.pop(context),
-          ),
-        ],
+        children: [Header(username: username, email: email), DrawerItems()],
       ),
     );
   }
