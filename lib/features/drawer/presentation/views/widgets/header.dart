@@ -41,9 +41,9 @@ class Header extends StatelessWidget {
                     ),
                     padding: const EdgeInsets.all(4),
                     child: Icon(
-                      Icons.add,
+                      Icons.edit,
                       size: 20,
-                      color: kPrimaryColor,
+                    //  color: kPrimaryColor,
                     ),
                   ),
                 ),
