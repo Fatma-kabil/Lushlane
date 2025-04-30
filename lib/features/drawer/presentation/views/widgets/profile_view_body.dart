@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lushlane_app/constants.dart';
+import 'package:lushlane_app/core/utils/widgets/build_password_info.dart';
 import 'package:lushlane_app/core/utils/widgets/build_profile_info.dart';
 import 'package:lushlane_app/features/drawer/presentation/manager/profile_cubit/profile_cubit.dart';
 import 'package:lushlane_app/features/drawer/presentation/views/widgets/profile_image_bloc_builder.dart';
@@ -44,6 +46,14 @@ class ProfileViewBody extends StatelessWidget {
           buildProfileInfo('Name', '_userName', Icons.person),
           SizedBox(height: 15.0),
           buildProfileInfo('Email', '_email', Icons.email),
+            PasswordField(),
+            SizedBox(height: 20.0),
+            ElevatedButton(
+              onPressed: () {
+                // يمكنك هنا إضافة منطق لحفظ التغييرات
+                print('Save Changes');
+              },
+              child: Text('Save Changes',style: TextStyle(color: kPrimaryColor),),),
           SizedBox(height: 15.0),
         ],
       ),
