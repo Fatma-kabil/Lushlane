@@ -9,6 +9,7 @@ import 'package:lushlane_app/core/utils/profile_image_manager.dart';
 import 'package:lushlane_app/features/auth/presentation/manger/login_cubit/login_cubit.dart';
 import 'package:lushlane_app/features/auth/presentation/manger/reset_password_cubit/reset_password_cubit.dart';
 import 'package:lushlane_app/features/auth/presentation/manger/signup_cubit/signup_cubit.dart';
+import 'package:lushlane_app/features/auth/presentation/views/login_view.dart';
 import 'package:lushlane_app/features/drawer/presentation/manager/profile_cubit/profile_cubit.dart';
 import 'package:lushlane_app/features/home/data/repos/home_repo_impl.dart';
 import 'package:lushlane_app/features/home/presentation/manager/fetch_pots_cubit/cart_cubit.dart/cart_cubit.dart';
@@ -54,7 +55,7 @@ class LushLaneApp extends StatelessWidget {
         BlocProvider( create: (context) => ProfileCubit(ProfileImageManager()),)
       ],
 
-      child: MaterialApp(debugShowCheckedModeBanner: false, home: HomeView()),
+      child: MaterialApp(debugShowCheckedModeBanner: false, home: LoginView()),
     );
   }
 }

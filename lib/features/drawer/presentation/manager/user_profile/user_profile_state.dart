@@ -11,8 +11,10 @@ final class UserProfileInitial extends UserProfileState {}
 class UserProfileLoaded extends UserProfileState {
   final String? name;
   final String? email;
+  
 
-  UserProfileLoaded(this.name, this.email);
+
+  UserProfileLoaded(this.name, this.email,);
 }
 
 class UserProfileError extends UserProfileState {
