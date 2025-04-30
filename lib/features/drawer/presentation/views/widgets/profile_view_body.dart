@@ -1,61 +1,101 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lushlane_app/constants.dart';
-import 'package:lushlane_app/core/utils/widgets/build_password_info.dart';
-import 'package:lushlane_app/core/utils/widgets/build_profile_info.dart';
-import 'package:lushlane_app/features/drawer/presentation/manager/profile_cubit/profile_cubit.dart';
-import 'package:lushlane_app/features/drawer/presentation/views/widgets/profile_image_bloc_builder.dart';
+import 'package:lushlane_app/core/utils/profile_repositry.dart';
+import 'package:lushlane_app/features/drawer/presentation/manager/user_profile/user_profile_cubit.dart';
 
-class ProfileViewBody extends StatelessWidget {
+class ProfileViewBody extends StatefulWidget {
   const ProfileViewBody({super.key});
 
   @override
+  State<ProfileViewBody> createState() => _ProfileViewBodyState();
+}
+
+class _ProfileViewBodyState extends State<ProfileViewBody> {
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController(); // لو حابة
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: EdgeInsets.all(16.0),
-      child: Column(
-        // crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Stack(
-            children: [
-              const ProfileImageBlocBuilder(),
-              Positioned(
-                bottom: 0,
-                right: 0,
-                child: GestureDetector(
-                  onTap: () {
-                    context.read<ProfileCubit>().pickImage();
-                  },
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                    ),
-                    padding: const EdgeInsets.all(4),
-                    child: Icon(
-                      Icons.edit,
-                      size: 20,
-                      //  color: kPrimaryColor,
+    return BlocProvider(
+      create: (_) => UserProfileCubit(ProfileRepository())..loadUserData(),
+      child: BlocBuilder<UserProfileCubit, UserProfileState>(
+        builder: (context, state) {
+          if (state is UserProfileInitial) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is UserProfileLoaded) {
+            // نحدّث الكنترولر بالقيم الحالية مره واحده
+            _nameController.text = state.name ?? '';
+            _emailController.text = state.email ?? '';
+
+            return SingleChildScrollView(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  const SizedBox(height: 20),
+                  
+                  // حقول التعديل
+                  TextField(
+                    controller: _nameController,
+                    decoration: const InputDecoration(
+                      labelText: 'Edit Name',
+                      prefixIcon: Icon(Icons.person),
                     ),
                   ),
-                ),
+                  const SizedBox(height: 15.0),
+                  TextField(
+                    controller: _emailController,
+                    decoration: const InputDecoration(
+                      labelText: 'Edit Email',
+                      prefixIcon: Icon(Icons.email),
+                    ),
+                  ),
+                  const SizedBox(height: 15.0),
+                  TextField(
+                    controller: _passwordController,
+                    obscureText: true,
+                    decoration: const InputDecoration(
+                      labelText: 'New Password',
+                      prefixIcon: Icon(Icons.lock),
+                    ),
+                  ),
+                  const SizedBox(height: 20.0),
+                  ElevatedButton(
+                    onPressed: () {
+                      final name = _nameController.text.trim();
+                      final email = _emailController.text.trim();
+                      final password = _passwordController.text.trim();
+
+                      if (name.isNotEmpty) {
+                        context.read<UserProfileCubit>().updateName(name);
+                      }
+                      if (email.isNotEmpty) {
+                        context.read<UserProfileCubit>().updateEmail(email);
+                      }
+                      if (password.isNotEmpty) {
+                        context.read<UserProfileCubit>().updatePassword(password);
+                      }
+                    },
+                    child: const Text('Save Changes'),
+                  ),
+                  const SizedBox(height: 15.0),
+                ],
               ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          buildProfileInfo('Name', '_userName', Icons.person),
-          SizedBox(height: 15.0),
-          buildProfileInfo('Email', '_email', Icons.email),
-            PasswordField(),
-            SizedBox(height: 20.0),
-            ElevatedButton(
-              onPressed: () {
-                // يمكنك هنا إضافة منطق لحفظ التغييرات
-                print('Save Changes');
-              },
-              child: Text('Save Changes',style: TextStyle(color: kPrimaryColor),),),
-          SizedBox(height: 15.0),
-        ],
+            );
+          } else if (state is UserProfileError) {
+            return Center(child: Text(state.message));
+          } else {
+            return const Center(child: Text('Unexpected state'));
+          }
+        },
       ),
     );
   }
