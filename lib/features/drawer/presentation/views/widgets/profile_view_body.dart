@@ -1,8 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lushlane_app/constants.dart';
 import 'package:lushlane_app/core/utils/profile_repositry.dart';
+import 'package:lushlane_app/features/auth/presentation/views/login_view.dart';
+import 'package:lushlane_app/features/drawer/presentation/manager/profile_cubit/profile_cubit.dart';
 import 'package:lushlane_app/features/drawer/presentation/manager/user_profile/user_profile_cubit.dart';
+import 'package:lushlane_app/features/drawer/presentation/manager/user_profile/user_profile_state.dart';
+import 'package:lushlane_app/features/drawer/presentation/views/drawer_view.dart';
 import 'package:lushlane_app/features/drawer/presentation/views/widgets/profile_image_bloc_builder.dart';
 
 class ProfileViewBody extends StatefulWidget {
@@ -16,16 +21,17 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _oldPasswordController = TextEditingController(); // جديد
+  final TextEditingController _oldPasswordController = TextEditingController();
 
   bool _isInitialized = false;
+  bool isPasswordChanged = false;
 
   @override
   void dispose() {
     _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
-    _oldPasswordController.dispose(); // تأكد من تفريغ المتحكم الجديد عند انتهاء الصفحة
+    _oldPasswordController.dispose();
     super.dispose();
   }
 
@@ -51,10 +57,11 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
           if (state is UserProfileInitial) {
             return const Center(child: CircularProgressIndicator());
           } else if (state is UserProfileLoaded) {
-            // Initialize the controllers with data if not initialized
             if (!_isInitialized) {
               _nameController.text = state.name ?? '';
               _emailController.text = state.email ?? '';
+              _oldPasswordController.text =
+                  state.password ?? ''; // عرض الباسورد القديم فقط كمخفي
               _isInitialized = true;
             }
 
@@ -63,9 +70,34 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
               child: Column(
                 children: [
                   const SizedBox(height: 20),
-                  ProfileImageBlocBuilder(),
+                  Stack(
+                    children: [
+                      const ProfileImageBlocBuilder(),
+                      Positioned(
+                        bottom: 0,
+                        right: 0,
+                        child: GestureDetector(
+                          onTap: () {
+                            context.read<ProfileCubit>().pickImage();
+                          },
+                          child: Container(
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                            ),
+                            padding: const EdgeInsets.all(4),
+                            child: Icon(
+                              Icons.edit,
+                              size: 20,
+                              //  color: kPrimaryColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  // Profile Image (if any)
                   const SizedBox(height: 30),
-                  // Edit Name
                   TextField(
                     controller: _nameController,
                     decoration: const InputDecoration(
@@ -74,7 +106,6 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                     ),
                   ),
                   const SizedBox(height: 25.0),
-                  // Edit Email
                   TextField(
                     controller: _emailController,
                     decoration: const InputDecoration(
@@ -83,11 +114,11 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                     ),
                   ),
                   const SizedBox(height: 25.0),
-                  // Display Old Password (Read-only and Hidden as Stars)
+                  // Display Old Password (Hidden as stars, not editable)
                   TextField(
-                    controller: TextEditingController(text: "secretPassword"), // استخدام controller
+                    controller: _oldPasswordController,
                     obscureText: true, // إخفاء النص بنجوم
-                    enabled: false, // منع التعديل
+                    enabled: false, // منع التعديل في هذا الحقل
                     decoration: const InputDecoration(
                       labelText: 'Old Password',
                       labelStyle: TextStyle(color: Colors.grey),
@@ -95,24 +126,21 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                     ),
                   ),
                   const SizedBox(height: 25.0),
-                  // New Password
                   TextField(
                     controller: _passwordController,
-                    obscureText: true,
+                    obscureText: true, // إخفاء النص بنجوم
                     decoration: const InputDecoration(
                       labelText: 'New Password',
                       labelStyle: TextStyle(color: Colors.grey),
                       prefixIcon: Icon(Icons.lock, color: Colors.grey),
                     ),
                   ),
-                  const SizedBox(height: 25.0),
+                  SizedBox(height: 50),
                   ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       final name = _nameController.text.trim();
                       final email = _emailController.text.trim();
                       final password = _passwordController.text.trim();
-                      final oldPassword =
-                          _oldPasswordController.text.trim(); // جديد
 
                       if (name.isNotEmpty) {
                         context.read<UserProfileCubit>().updateName(name);
@@ -124,19 +152,34 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                         context.read<UserProfileCubit>().updatePassword(
                           password,
                         );
+                        isPasswordChanged = true;
                       }
-
-                      // Send the old password if you are validating or updating it
-                      if (oldPassword.isNotEmpty) {
-                        // هنا لو محتاجين نستخدم كلمة المرور القديمة في التحقق أو تحديث
-                        context.read<UserProfileCubit>().updatePassword(
-                          oldPassword,
+                      if (isPasswordChanged) {
+                        // لو غيّر الباسورد ➜ نعمله تسجيل خروج ونرجعه لشاشة تسجيل الدخول
+                        await FirebaseAuth.instance.signOut();
+                        if (!mounted) return;
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const LoginView(),
+                          ),
+                          (route) => false,
                         );
+                      } else {
+                        // لو بس غيّر الاسم أو الإيميل ➜ يرجع للشاشة اللي قبلها (drawer)
+                        if (Navigator.canPop(context)) {
+                          Navigator.pop(context,'updated');
+                        } else {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const DrawerView(),
+                            ),
+                          );
+                        }
                       }
-
-                      // Reload user data after updates
-                      context.read<UserProfileCubit>().loadUserData();
                     },
+
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: const Text(

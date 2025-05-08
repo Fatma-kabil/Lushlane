@@ -14,7 +14,6 @@ import 'package:lushlane_app/features/drawer/presentation/manager/profile_cubit/
 import 'package:lushlane_app/features/home/data/repos/home_repo_impl.dart';
 import 'package:lushlane_app/features/home/presentation/manager/fetch_pots_cubit/cart_cubit.dart/cart_cubit.dart';
 import 'package:lushlane_app/features/home/presentation/manager/fetch_pots_cubit/fetch_pots_cubit.dart';
-import 'package:lushlane_app/features/home/presentation/views/home_view.dart';
 import 'package:lushlane_app/firebase_options.dart';
 
 void main() async {

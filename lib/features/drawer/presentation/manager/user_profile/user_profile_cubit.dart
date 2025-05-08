@@ -1,50 +1,62 @@
+// user_profile_cubit.dart
 import 'package:bloc/bloc.dart';
 import 'package:lushlane_app/core/utils/profile_repositry.dart';
-import 'package:meta/meta.dart';
-
-part 'user_profile_state.dart';
+import 'package:lushlane_app/features/drawer/presentation/manager/user_profile/user_profile_state.dart';
 
 class UserProfileCubit extends Cubit<UserProfileState> {
-   final ProfileRepository _repository;
-  UserProfileCubit(this._repository) : super(UserProfileInitial());
+  final ProfileRepository _profileRepository;
 
-  
-  void loadUserData() {
-    final user = _repository.getCurrentUser();
-    if (user != null) {
-      emit(UserProfileLoaded(user.displayName, user.email));
-    } else {
-      emit(UserProfileError('User not logged in'));
+  UserProfileCubit(this._profileRepository) : super(UserProfileInitial());
+
+  void loadUserData() async {
+    try {
+      emit(UserProfileLoading());
+      final userData = _profileRepository.getCurrentUser();
+
+      if (userData == null) {
+        emit(UserProfileError(message: 'No user is logged in.'));
+        return;
+      }
+
+      emit(
+        UserProfileLoaded(
+          name: userData.displayName,
+          email: userData.email,
+          password: '********', // placeholder فقط للعرض
+        ),
+      );
+    } catch (e) {
+      emit(UserProfileError(message: e.toString()));
     }
   }
 
-  Future<void> updateName(String name) async {
+  void updateName(String name) async {
     try {
-      await _repository.updateName(name);
-      final user = _repository.getCurrentUser();
-      emit(UserProfileLoaded(user?.displayName, user?.email));
+      emit(UserProfileLoading());
+      await _profileRepository.updateName(name);
+      loadUserData(); // إعادة تحميل كل البيانات بعد التحديث
     } catch (e) {
-      emit(UserProfileError('Failed to update name: $e'));
+      emit(UserProfileError(message: e.toString()));
     }
   }
 
-  Future<void> updateEmail(String email) async {
+  void updateEmail(String email) async {
     try {
-      await _repository.updateEmail(email);
-      final user = _repository.getCurrentUser();
-      emit(UserProfileLoaded(user?.displayName, user?.email));
+      emit(UserProfileLoading());
+      await _profileRepository.updateEmail(email);
+      loadUserData();
     } catch (e) {
-      emit(UserProfileError('Failed to update email: $e'));
+      emit(UserProfileError(message: e.toString()));
     }
   }
 
-  Future<void> updatePassword(String password) async {
+  void updatePassword(String password) async {
     try {
-      await _repository.updatePassword(password);
-      final user = _repository.getCurrentUser();
-      emit(UserProfileLoaded(user?.displayName, user?.email));
+      emit(UserProfileLoading());
+      await _profileRepository.updatePassword(password);
+      loadUserData();
     } catch (e) {
-      emit(UserProfileError('Failed to update password: $e'));
+      emit(UserProfileError(message: e.toString()));
     }
   }
 }
