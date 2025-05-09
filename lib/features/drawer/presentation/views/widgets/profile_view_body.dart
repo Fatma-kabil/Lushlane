@@ -1,15 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lushlane_app/constants.dart';
 import 'package:lushlane_app/core/utils/functions/save_changes.dart';
 import 'package:lushlane_app/core/utils/profile_repositry.dart';
-import 'package:lushlane_app/features/auth/presentation/views/login_view.dart';
 import 'package:lushlane_app/features/drawer/presentation/manager/user_profile/user_profile_cubit.dart';
 import 'package:lushlane_app/features/drawer/presentation/manager/user_profile/user_profile_state.dart';
-import 'package:lushlane_app/features/drawer/presentation/views/drawer_view.dart';
-import 'package:lushlane_app/features/drawer/presentation/views/widgets/Profile_image_with_edit_button.dart';
-import 'package:lushlane_app/features/drawer/presentation/views/widgets/custom_profile_text_field.dart';
+import 'package:lushlane_app/features/drawer/presentation/views/widgets/profile_form_fields.dart';
 
 class ProfileViewBody extends StatefulWidget {
   const ProfileViewBody({super.key});
@@ -68,71 +63,26 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
 
             return SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
-              child: Column(
-                children: [
-                  const SizedBox(height: 20),
-                  ProfileImageWithEditButton(),
-                  // Profile Image (if any)
-                  const SizedBox(height: 30),
-                  CustomProfileTextField(
-                    controller: _nameController,
-                    label: 'Edit Name',
-                    icon: Icons.person,
-                  ),
-                  const SizedBox(height: 25),
-                  CustomProfileTextField(
-                    controller: _emailController,
-                    label: 'Edit Email',
-                    icon: Icons.email,
-                  ),
-                  const SizedBox(height: 25),
-                  CustomProfileTextField(
-                    controller: _oldPasswordController,
-                    label: 'Old Password',
-                    icon: Icons.lock,
-                    obscureText: true,
-                    enabled: false,
-                  ),
-                  const SizedBox(height: 25),
-                  CustomProfileTextField(
-                    controller: _passwordController,
-                    label: 'New Password',
-                    icon: Icons.lock,
-                    obscureText: true,
-                  ),
-                  SizedBox(height: 50),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                    ),
-                    onPressed: () {
-                      saveProfileChanges(
-                        context: context,
-                        name: _nameController.text.trim(),
-                        email: _emailController.text.trim(),
-                        password: _passwordController.text.trim(),
-                        isPasswordChanged: isPasswordChanged,
-                        onPasswordChanged: () {
-                          setState(() {
-                            isPasswordChanged = true;
-                          });
-                        },
-                      );
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: const Text(
-                        'Save Changes',
-                        style: TextStyle(
-                          color: kPrimaryColor,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              child:  ProfileFormFields(
+    nameController: _nameController,
+    emailController: _emailController,
+    oldPasswordController: _oldPasswordController,
+    passwordController: _passwordController,
+    onSavePressed: () {
+      saveProfileChanges(
+        context: context,
+        name: _nameController.text.trim(),
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+        isPasswordChanged: isPasswordChanged,
+        onPasswordChanged: () {
+          setState(() {
+            isPasswordChanged = true;
+          });
+        },
+      );
+    },
+  ),
             );
           } else if (state is UserProfileError) {
             return Center(child: Text(state.message));

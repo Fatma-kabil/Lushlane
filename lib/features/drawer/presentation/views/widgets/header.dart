@@ -1,14 +1,10 @@
-
 import 'package:flutter/material.dart';
 import 'package:lushlane_app/constants.dart';
+import 'package:lushlane_app/features/drawer/presentation/views/widgets/Profile_image_with_edit_button.dart';
 import 'package:lushlane_app/features/drawer/presentation/views/widgets/profile_image_bloc_builder.dart';
 
 class Header extends StatelessWidget {
-  const Header({
-    super.key,
-    required this.username,
-    required this.email,
-  });
+  const Header({super.key, required this.username, required this.email});
 
   final String username;
   final String email;
@@ -16,13 +12,11 @@ class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DrawerHeader(
-      decoration: const BoxDecoration(
-        color: kPrimaryColor,
-      ),
+      decoration: const BoxDecoration(color: kPrimaryColor),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ProfileImageBlocBuilder(),
+          ProfileImageWithEditButton(),
           const SizedBox(height: 10),
           Text(
             username,
@@ -34,10 +28,7 @@ class Header extends StatelessWidget {
           ),
           Text(
             email,
-            style: const TextStyle(
-              color: Colors.white70,
-              fontSize: 14,
-            ),
+            style: const TextStyle(color: Colors.white70, fontSize: 14),
           ),
         ],
       ),
