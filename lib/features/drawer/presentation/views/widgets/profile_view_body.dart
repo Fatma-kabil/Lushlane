@@ -9,6 +9,7 @@ import 'package:lushlane_app/features/drawer/presentation/manager/user_profile/u
 import 'package:lushlane_app/features/drawer/presentation/manager/user_profile/user_profile_state.dart';
 import 'package:lushlane_app/features/drawer/presentation/views/drawer_view.dart';
 import 'package:lushlane_app/features/drawer/presentation/views/widgets/Profile_image_with_edit_button.dart';
+import 'package:lushlane_app/features/drawer/presentation/views/widgets/custom_profile_text_field.dart';
 
 
 class ProfileViewBody extends StatefulWidget {
@@ -74,42 +75,31 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                   ProfileImageWithEditButton(),
                   // Profile Image (if any)
                   const SizedBox(height: 30),
-                  TextField(
+                  CustomProfileTextField(
                     controller: _nameController,
-                    decoration: const InputDecoration(
-                      labelText: 'Edit Name',
-                      prefixIcon: Icon(Icons.person, color: Colors.grey),
-                    ),
+                    label: 'Edit Name',
+                    icon: Icons.person,
                   ),
-                  const SizedBox(height: 25.0),
-                  TextField(
+                  const SizedBox(height: 25),
+                  CustomProfileTextField(
                     controller: _emailController,
-                    decoration: const InputDecoration(
-                      labelText: 'Edit Email',
-                      prefixIcon: Icon(Icons.email, color: Colors.grey),
-                    ),
+                    label: 'Edit Email',
+                    icon: Icons.email,
                   ),
-                  const SizedBox(height: 25.0),
-                  // Display Old Password (Hidden as stars, not editable)
-                  TextField(
+                  const SizedBox(height: 25),
+                  CustomProfileTextField(
                     controller: _oldPasswordController,
-                    obscureText: true, // إخفاء النص بنجوم
-                    enabled: false, // منع التعديل في هذا الحقل
-                    decoration: const InputDecoration(
-                      labelText: 'Old Password',
-                      labelStyle: TextStyle(color: Colors.grey),
-                      prefixIcon: Icon(Icons.lock, color: Colors.grey),
-                    ),
+                    label: 'Old Password',
+                    icon: Icons.lock,
+                    obscureText: true,
+                    enabled: false,
                   ),
-                  const SizedBox(height: 25.0),
-                  TextField(
+                  const SizedBox(height: 25),
+                  CustomProfileTextField(
                     controller: _passwordController,
-                    obscureText: true, // إخفاء النص بنجوم
-                    decoration: const InputDecoration(
-                      labelText: 'New Password',
-                      labelStyle: TextStyle(color: Colors.grey),
-                      prefixIcon: Icon(Icons.lock, color: Colors.grey),
-                    ),
+                    label: 'New Password',
+                    icon: Icons.lock,
+                    obscureText: true,
                   ),
                   SizedBox(height: 50),
                   ElevatedButton(
