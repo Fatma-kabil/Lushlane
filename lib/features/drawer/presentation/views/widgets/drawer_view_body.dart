@@ -41,6 +41,7 @@ class _DrawerViewBodyState extends State<DrawerViewBody> {
     final email = user?.email ?? 'guest@example.com';
 
     return Drawer(
+      backgroundColor: Colors.white,
       child: ListView(
         padding: EdgeInsets.zero,
         children: [

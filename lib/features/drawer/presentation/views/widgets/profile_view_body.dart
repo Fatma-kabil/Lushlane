@@ -4,11 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lushlane_app/constants.dart';
 import 'package:lushlane_app/core/utils/profile_repositry.dart';
 import 'package:lushlane_app/features/auth/presentation/views/login_view.dart';
-import 'package:lushlane_app/features/drawer/presentation/manager/profile_cubit/profile_cubit.dart';
+
 import 'package:lushlane_app/features/drawer/presentation/manager/user_profile/user_profile_cubit.dart';
 import 'package:lushlane_app/features/drawer/presentation/manager/user_profile/user_profile_state.dart';
 import 'package:lushlane_app/features/drawer/presentation/views/drawer_view.dart';
-import 'package:lushlane_app/features/drawer/presentation/views/widgets/profile_image_bloc_builder.dart';
+import 'package:lushlane_app/features/drawer/presentation/views/widgets/Profile_image_with_edit_button.dart';
+
 
 class ProfileViewBody extends StatefulWidget {
   const ProfileViewBody({super.key});
@@ -70,32 +71,7 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
               child: Column(
                 children: [
                   const SizedBox(height: 20),
-                  Stack(
-                    children: [
-                      const ProfileImageBlocBuilder(),
-                      Positioned(
-                        bottom: 0,
-                        right: 0,
-                        child: GestureDetector(
-                          onTap: () {
-                            context.read<ProfileCubit>().pickImage();
-                          },
-                          child: Container(
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.white,
-                            ),
-                            padding: const EdgeInsets.all(4),
-                            child: Icon(
-                              Icons.edit,
-                              size: 20,
-                              //  color: kPrimaryColor,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  ProfileImageWithEditButton(),
                   // Profile Image (if any)
                   const SizedBox(height: 30),
                   TextField(
@@ -137,6 +113,7 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                   ),
                   SizedBox(height: 50),
                   ElevatedButton(
+                    style: ButtonStyle(),
                     onPressed: () async {
                       final name = _nameController.text.trim();
                       final email = _emailController.text.trim();
