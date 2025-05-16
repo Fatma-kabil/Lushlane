@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:lushlane_app/core/utils/stripe_service.dart';
 import 'package:meta/meta.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'login_state.dart';
 
@@ -16,6 +18,20 @@ class LoginCubit extends Cubit<LoginState> {
     try {
       UserCredential user = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
+
+
+           // جيبي customerId من SharedPreferences
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? stripeCustomerId = prefs.getString('stripeCustomerId');
+
+     if (stripeCustomerId == null) {
+      // لو مش موجود، نعمل إنشاء customer جديد على Stripe
+      stripeCustomerId = await StripeService().createStripeCustomer(email: email);
+
+      // نخزن الـ customerId الجديد في SharedPreferences
+      await prefs.setString('stripeCustomerId', stripeCustomerId);
+    }
+
       emit(LoginSuccess());
     } on FirebaseAuthException catch (e) {
       print('FirebaseAuthException: ${e.code}');

@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:lushlane_app/core/utils/stripe_service.dart';
 import 'package:meta/meta.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'signup_states.dart';
 
@@ -21,6 +23,13 @@ class SignupCubit extends Cubit<SignupStates> {
 
       // هنا بنضيف الاسم كـ displayName في Firebase Auth
       await user.user!.updateDisplayName(name);
+
+      final stripeCustomerId = await StripeService().createStripeCustomer(email: email);
+
+    // خزني customerId محليًا
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('stripeCustomerId', stripeCustomerId);
+
 
       emit(SignupSuccess());
     } on FirebaseAuthException catch (e) {
