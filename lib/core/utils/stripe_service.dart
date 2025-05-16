@@ -57,4 +57,16 @@ class StripeService {
     var ephemeralkey = EphemeralKeyModel.fromJson(response.data);
     return ephemeralkey;
   }
+
+   Future<String> createStripeCustomer({required String email}) async {
+    var response = await apiservice.post(
+      body: {'email': email},
+      contentType: Headers.formUrlEncodedContentType,
+      url: 'https://api.stripe.com/v1/customers',
+      token: ApiKeys.secretKey,
+    );
+
+    return response.data['id']; // ده هو الـ customerId
+  }
+
 }
