@@ -27,7 +27,7 @@ class ProfileImageBlocBuilder extends StatelessWidget {
         } else {
           return const CircleAvatar(
             radius: 40,
-            backgroundImage: AssetImage("assets/images/test.png"),
+            backgroundImage: AssetImage("assets/images/user.png"),
           );
         }
       },
