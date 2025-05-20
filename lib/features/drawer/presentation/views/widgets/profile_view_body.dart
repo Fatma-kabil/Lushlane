@@ -12,25 +12,24 @@ class ProfileViewBody extends StatefulWidget {
   @override
   State<ProfileViewBody> createState() => _ProfileViewBodyState();
 }
-
+// داخل ProfileViewBody (StatefulWidget)
 class _ProfileViewBodyState extends State<ProfileViewBody> {
+  final _formKey = GlobalKey<FormState>();
+
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _oldPasswordController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   bool _isInitialized = false;
-  // This 'isPasswordChanged' flag is not directly used in saveProfileChanges for logic flow,
-  // but if you have internal UI logic dependent on it, you can keep it.
-  // The 'onPasswordChanged' callback handles setting it.
   bool isPasswordChanged = false;
 
   @override
   void dispose() {
     _nameController.dispose();
     _emailController.dispose();
-    _passwordController.dispose();
     _oldPasswordController.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 
@@ -40,69 +39,63 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
       create: (_) => UserProfileCubit(ProfileRepository())..loadUserData(),
       child: BlocConsumer<UserProfileCubit, UserProfileState>(
         listener: (context, state) {
-          // This listener is for states emitted by UserProfileCubit,
-          // typically for initial data loading or internal Cubit errors.
-          // The success/error messages for *saving* changes are handled by saveProfileChanges.
-
           if (state is UserProfileError) {
-            // Show error message if there's an issue loading the user profile
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.message), backgroundColor: Colors.red),
+              SnackBar(
+                content: Text(state.message),
+                backgroundColor: Colors.red,
+              ),
             );
           }
-          // Do NOT show a success message here for UserProfileLoaded,
-          // as it fires on initial data load, not on successful profile updates.
         },
         builder: (context, state) {
-          if (state is UserProfileInitial) {
+          if (state is UserProfileInitial || state is UserProfileLoading) {
             return const Center(child: CircularProgressIndicator());
           } else if (state is UserProfileLoaded) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               if (!_isInitialized) {
-                // Initialize controllers with loaded data only once
                 _nameController.text = state.name ?? '';
                 _emailController.text = state.email ?? '';
-                // Note: It's generally not recommended to store or display
-                // the actual password in a controller for security reasons,
-                // especially for oldPassword.
-                // You might want to clear or not set _oldPasswordController.text
-                // if it's meant for re-authentication before password change.
-                _oldPasswordController.text = state.password ?? '';
+                _oldPasswordController.text = '';
+                _passwordController.text = '';
                 _isInitialized = true;
               }
             });
 
             return SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
-              child: ProfileFormFields(
-                nameController: _nameController,
-                emailController: _emailController,
-                oldPasswordController: _oldPasswordController,
-                passwordController: _passwordController,
-                onSavePressed: () {
-                  // Call your save function
-                saveProfileChanges(
-  context: context,
-  name: _nameController.text.trim(),
-  email: _emailController.text.trim(),
-  password: _oldPasswordController.text.trim(), // ⬅️ الباسورد الحالية
-  newPassword: _passwordController.text.trim(), // ⬅️ الباسورد الجديدة
-  isPasswordChanged: isPasswordChanged,
-  onPasswordChanged: () {
-    setState(() {
-      isPasswordChanged = true;
-    });
-  },
-);
-
-                },
+              child: Form(
+                key: _formKey,
+                child: ProfileFormFields(
+                  nameController: _nameController,
+                  emailController: _emailController,
+                  oldPasswordController: _oldPasswordController,
+                  passwordController: _passwordController,
+                  onSavePressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      saveProfileChanges(
+                        context: context,
+                        name: _nameController.text.trim(),
+                        email: _emailController.text.trim(),
+                        password: _oldPasswordController.text.trim(),
+                        newPassword: _passwordController.text.trim(),
+                        isPasswordChanged: isPasswordChanged,
+                        onPasswordChanged: () {
+                          setState(() {
+                            isPasswordChanged = true;
+                          });
+                        },
+                      );
+                    }
+                  },
+                ),
               ),
             );
           } else if (state is UserProfileError) {
-            // Display error when UserProfileError state is encountered in builder
-            return Center(child: Text('Error loading profile: ${state.message}'));
+            return Center(
+              child: Text('Error loading profile: ${state.message}'),
+            );
           } else {
-            // Fallback for other states (e.g., UserProfileLoading if you had one)
             return const Center(child: CircularProgressIndicator());
           }
         },

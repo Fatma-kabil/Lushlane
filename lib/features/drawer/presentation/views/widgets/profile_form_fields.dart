@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lushlane_app/constants.dart';
 import 'package:lushlane_app/features/drawer/presentation/views/widgets/profile_image_with_edit_button.dart';
 import 'package:lushlane_app/features/drawer/presentation/views/widgets/custom_profile_text_field.dart';
-
+// داخل ProfileFormFields (غير TextField لـ TextFormField وأضف validator)
 class ProfileFormFields extends StatelessWidget {
   const ProfileFormFields({
     super.key,
@@ -42,8 +42,13 @@ class ProfileFormFields extends StatelessWidget {
           controller: oldPasswordController,
           label: 'Old Password',
           icon: Icons.lock,
-         obscureText: true,
-        //  enabled: false,
+          obscureText: true,
+          validator: (value) {
+            if (value == null || value.trim().isEmpty) {
+              return 'Please enter your current password';
+            }
+            return null;
+          },
         ),
         const SizedBox(height: 25),
         CustomProfileTextField(

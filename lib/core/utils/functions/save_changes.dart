@@ -69,7 +69,7 @@ Future<void> saveProfileChanges({
           children: [
             Icon(Icons.check_circle, color: Colors.white),
             SizedBox(width: 8),
-            Text("Profile updated successfully"),
+            Text("Profile updated successfully...please login again"),
           ],
         ),
         backgroundColor: Colors.green,

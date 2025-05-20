@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:lushlane_app/constants.dart';
-
+// داخل CustomProfileTextField: خليه يدعم validator ويستخدم TextFormField بدل TextField
 class CustomProfileTextField extends StatelessWidget {
   final TextEditingController controller;
   final String label;
   final IconData icon;
   final bool obscureText;
   final bool enabled;
+  final String? Function(String?)? validator; // اضفنا validator
 
   const CustomProfileTextField({
     super.key,
@@ -15,25 +16,27 @@ class CustomProfileTextField extends StatelessWidget {
     required this.icon,
     this.obscureText = false,
     this.enabled = true,
+    this.validator,
   });
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       controller: controller,
       obscureText: obscureText,
       enabled: enabled,
-      cursorColor: enabled ? kPrimaryColor : Colors.grey, // لون المؤشر وقت الكتابة
+      validator: validator,  // استخدم validator هنا
+      cursorColor: enabled ? kPrimaryColor : Colors.grey,
       decoration: InputDecoration(
         labelText: label,
         labelStyle: TextStyle(color: enabled ? Colors.black : Colors.grey),
         prefixIcon: Icon(icon, color: Colors.grey),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.grey), // عادي لما مش مضغوط عليه
+          borderSide: BorderSide(color: Colors.grey),
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: enabled ? kPrimaryColor : Colors.grey, // أحمر وقت التركيز
+            color: enabled ? kPrimaryColor : Colors.grey,
             width: 2,
           ),
         ),
