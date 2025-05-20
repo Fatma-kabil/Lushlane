@@ -8,8 +8,8 @@ Future<void> saveProfileChanges({
   required BuildContext context,
   required String name,
   required String email,
-  required String password,       // الباسورد الحالية
-  required String newPassword,    // الباسورد الجديدة (اختياري)
+  required String password,
+  required String newPassword,
   required bool isPasswordChanged,
   required void Function() onPasswordChanged,
 }) async {
@@ -17,18 +17,17 @@ Future<void> saveProfileChanges({
   final currentUser = FirebaseAuth.instance.currentUser;
   final currentEmail = currentUser?.email ?? '';
 
-  bool hasChanges = false;
+  bool nameChanged = false;
   bool shouldSignOut = false;
 
   if (name.isNotEmpty && name != currentUser?.displayName) {
     userCubit.updateName(name);
-    hasChanges = true;
+    nameChanged = true;
   }
 
   if (email.isNotEmpty && email != currentEmail) {
     try {
       await userCubit.updateEmail(currentEmail, password, email);
-      hasChanges = true;
       shouldSignOut = true;
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -42,7 +41,6 @@ Future<void> saveProfileChanges({
     try {
       await userCubit.updatePassword(currentEmail, password, newPassword);
       onPasswordChanged();
-      hasChanges = true;
       shouldSignOut = true;
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -52,7 +50,7 @@ Future<void> saveProfileChanges({
     }
   }
 
-  if (!hasChanges) {
+  if (!nameChanged && !shouldSignOut) {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text("No changes to save."),
@@ -63,17 +61,15 @@ Future<void> saveProfileChanges({
   }
 
   if (context.mounted) {
+    final message = shouldSignOut
+        ? "Profile updated successfully\n🔐 Please login again"
+        : "✅ Profile updated successfully";
+
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Row(
-          children: [
-            Icon(Icons.check_circle, color: Colors.white),
-            SizedBox(width: 8),
-            Text("Profile updated successfully...please login again"),
-          ],
-        ),
+      SnackBar(
+        content: Text(message, textAlign: TextAlign.center),
         backgroundColor: Colors.green,
-        duration: Duration(seconds: 2),
+        duration: const Duration(seconds: 2),
       ),
     );
   }
@@ -89,3 +85,4 @@ Future<void> saveProfileChanges({
     }
   }
 }
+
