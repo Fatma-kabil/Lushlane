@@ -42,8 +42,8 @@ class ProfileFormFields extends StatelessWidget {
           controller: oldPasswordController,
           label: 'Old Password',
           icon: Icons.lock,
-          obscureText: true,
-          enabled: false,
+         obscureText: true,
+        //  enabled: false,
         ),
         const SizedBox(height: 25),
         CustomProfileTextField(

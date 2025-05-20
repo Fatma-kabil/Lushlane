@@ -1,4 +1,3 @@
-// user_profile_cubit.dart
 import 'package:bloc/bloc.dart';
 import 'package:lushlane_app/core/utils/profile_repositry.dart';
 import 'package:lushlane_app/features/drawer/presentation/manager/user_profile/user_profile_state.dart';
@@ -8,7 +7,7 @@ class UserProfileCubit extends Cubit<UserProfileState> {
 
   UserProfileCubit(this._profileRepository) : super(UserProfileInitial());
 
-  void loadUserData() async {
+  Future<void> loadUserData() async {
     try {
       emit(UserProfileLoading());
       final userData = _profileRepository.getCurrentUser();
@@ -18,43 +17,49 @@ class UserProfileCubit extends Cubit<UserProfileState> {
         return;
       }
 
-      emit(
-        UserProfileLoaded(
-          name: userData.displayName,
-          email: userData.email,
-          password: '********', // placeholder فقط للعرض
-        ),
-      );
+      emit(UserProfileLoaded(
+        name: userData.displayName,
+        email: userData.email,
+        password: '********',
+      ));
     } catch (e) {
       emit(UserProfileError(message: e.toString()));
     }
   }
 
-  void updateName(String name) async {
+  Future<void> updateName(String name) async {
     try {
       emit(UserProfileLoading());
       await _profileRepository.updateName(name);
-      loadUserData(); // إعادة تحميل كل البيانات بعد التحديث
+      await loadUserData();
     } catch (e) {
       emit(UserProfileError(message: e.toString()));
     }
   }
 
-  void updateEmail(String email) async {
+  Future<void> updateEmail(String currentEmail, String password, String newEmail) async {
     try {
       emit(UserProfileLoading());
-      await _profileRepository.updateEmail(email);
-      loadUserData();
+      await _profileRepository.updateEmail(
+        currentEmail: currentEmail,
+        password: password,
+        newEmail: newEmail,
+      );
+      await loadUserData();
     } catch (e) {
       emit(UserProfileError(message: e.toString()));
     }
   }
 
-  void updatePassword(String password) async {
+  Future<void> updatePassword(String email, String currentPassword, String newPassword) async {
     try {
       emit(UserProfileLoading());
-      await _profileRepository.updatePassword(password);
-      loadUserData();
+      await _profileRepository.updatePassword(
+        email: email,
+        currentPassword: currentPassword,
+        newPassword: newPassword,
+      );
+      await loadUserData();
     } catch (e) {
       emit(UserProfileError(message: e.toString()));
     }
