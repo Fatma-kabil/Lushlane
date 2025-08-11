@@ -1,16 +1,52 @@
-# lushlane_app
+# 🌱 **Gardening E-Commerce App**
 
-A new Flutter project.
+<p align="center">
+  <!-- ضع صورة اللوجو هنا -->
+  <img src="assets\images\LushLaneAppIcon.png" alt="App Logo" width="120">
+</p>
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## 📌 **Overview**
+The **Gardening E-Commerce App** is a feature-rich mobile application that allows users to:
+- 🌿 Browse and purchase gardening products
+- 👤 Manage their personal profile
+- 💳 Complete secure transactions
 
-A few resources to get you started if this is your first Flutter project:
+The app follows **Clean Architecture principles**, uses **Cubit (BLoC)** for state management, **Dio** for networking, and integrates **Stripe** for secure online payments.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+---
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 📷 Screenshots
+
+<p align="center">
+  <img src="assets\images\login.png" alt="Login Screen" width="250">
+  <img src="assets\images\sign_up.png" alt="Signup Screen " width="250">
+  <img src="assets\images\home.png" alt="Home Screen" width="250">
+  <img src="assets\images\detalails.png" alt="Details Screen" width="250">
+  <img src="assets\images\checkout.png" alt="Checkout Screen" width="250">
+  <img src="assets\images\thank_you.png" alt="Thank you Screen" width="250">
+</p>
+
+## ✨ **Features**
+- 🛍 Product listing & categories  
+- 🔍 Product search & filtering  
+- 📄 Product details with images & descriptions  
+- 🛒 Shopping cart & checkout  
+- 💳 **Secure payment via Stripe**  
+- 👤 User authentication & profile management  
+- 📱 Cross-platform support (Android & iOS)  
+
+---
+
+## 🛠 **Tech Stack**
+| Tool / Library         | Purpose |
+|------------------------|---------|
+| **Flutter**            | Cross-platform app development |
+| **Cubit (BLoC)**        | State management |
+| **Dio**                | Networking & API requests |
+| **Clean Architecture** | Maintainable & scalable structure |
+| **Stripe**             | Payment gateway integration |
+
+
+
