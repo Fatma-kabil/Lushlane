@@ -29,8 +29,7 @@ The app follows **Clean Architecture principles**, uses **Cubit (BLoC)** for sta
 </p>
 
 ## ✨ **Features**
-- 🛍 Product listing & categories  
-- 🔍 Product search & filtering  
+- 🛍 Product listing  
 - 📄 Product details with images & descriptions  
 - 🛒 Shopping cart & checkout  
 - 💳 **Secure payment via Stripe**  
